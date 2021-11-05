@@ -71,7 +71,7 @@ public class Torneo {
 
     @Override
     public String toString() {
-        return "Torneo --> " + "idTorneo: " + idTorneo + ", Nombre: " + nombre + ", Fecha de Inicio: " + fechaIn + ", Fecha Finalizacion: " + fechaFn + ", Activo: " + activo;
+        return nombre;
     }
     
     

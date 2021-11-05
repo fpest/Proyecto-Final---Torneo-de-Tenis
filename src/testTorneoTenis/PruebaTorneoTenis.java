@@ -1,11 +1,11 @@
 
 package testTorneoTenis;
 
-import control.JugadorData;
+import control.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import modelo.Conexion;
-import modelo.Jugador;
+import modelo.*;
 
 public class PruebaTorneoTenis {
 
@@ -15,7 +15,10 @@ public class PruebaTorneoTenis {
     
             Conexion conexion= new Conexion();
             JugadorData jd = new JugadorData(conexion);
-
+            TorneoData td = new TorneoData(conexion);
+            EstadioData ed = new EstadioData(conexion);
+            /*
+            Desde aqui Prueba de Jugador
             //Instancias de jugadores
             int idJug=0;
        
@@ -121,6 +124,45 @@ public class PruebaTorneoTenis {
                 System.out.println("ID : " + jugadores.getIdJugador() + " - " + jugadores.getApellido() +" - DNI:"+ jugadores.getDni());
             }
             System.out.println("");
+            
+            //Hasta aqui Prueba de Jugador
+            */
+            
+            //Desde Aqui Prueba de Torneo
+            /*
+              //Instancias de Torneos
+            Torneo t1 = new Torneo("Brasil Open", LocalDate.of(2021, 11, 1), LocalDate.of(2021, 11, 30), true);
+            Torneo t2 = new Torneo("Indian Wells", LocalDate.of(2021, 10, 7), LocalDate.of(2021, 10, 17), true);
+            Torneo t3 = new Torneo("Australia Open", LocalDate.of(2021, 1, 27), LocalDate.of(2021, 1, 27), true);
+            Torneo t4 = new Torneo("Roland Garros", LocalDate.of(2021, 5, 30), LocalDate.of(2021, 6, 13), true);
+            Torneo t5 = new Torneo("Cincinnati", LocalDate.of(2021, 8, 13), LocalDate.of(2021, 8, 21), true);
+            
+            
+            //Guardar Torneo
+            td.guardarTorneo(t1); td.guardarTorneo(t2); td.guardarTorneo(t3); td.guardarTorneo(t4); td.guardarTorneo(t5);
+            //Buscar Torneo
+            System.out.println(td.buscarTorneo(3).toString());
+            //Desactivar Torneo
+            td.desactivarTorneo(td.buscarTorneo(3));
+            //Activar Torneo
+            td.activarTorneo(td.buscarTorneo(2));
+            //Obtener lista de torneos y mostrar
+            ArrayList<Torneo> listaTorneos = (ArrayList)td.obtenerTodosLosTorneos();
+            for (Torneo torneos : listaTorneos) {
+                System.out.println(torneos.getNombre() +" - "+ torneos.getIdTorneo());
+            }
+            //Obtener lista de torneos en ROMA y mostrar
+            ArrayList<Torneo> listaTorneosRoma = (ArrayList)td.obtenerTorneos("Roma");
+            for (Torneo torneos : listaTorneosRoma) {
+                System.out.println(torneos.toString());
+            }
+            // Hasta aqui Prueba Torneo
+            */
+       
+                 
+                 Estadio e1 = new Estadio(22, "San Luis", "Junin 888",1, 1000,2000,30000,"Ladrillo",true);
+            
+                 ed.guardarEstadio(e1);
             
             
 

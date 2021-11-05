@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-10-2021 a las 02:41:54
+-- Tiempo de generación: 04-11-2021 a las 11:41:51
 -- Versión del servidor: 10.4.21-MariaDB
 -- Versión de PHP: 8.0.11
 
@@ -169,7 +169,8 @@ ALTER TABLE `patrocionio`
 -- Indices de la tabla `torneo`
 --
 ALTER TABLE `torneo`
-  ADD PRIMARY KEY (`IDTorneo`);
+  ADD PRIMARY KEY (`IDTorneo`),
+  ADD UNIQUE KEY `Nombre` (`Nombre`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -185,7 +186,7 @@ ALTER TABLE `estadio`
 -- AUTO_INCREMENT de la tabla `jugador`
 --
 ALTER TABLE `jugador`
-  MODIFY `IDJugador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=180;
+  MODIFY `IDJugador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=187;
 
 --
 -- AUTO_INCREMENT de la tabla `partido`
