@@ -2,16 +2,17 @@
 package modelo;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Partido {
 private int idPartido;
-private int idTorneo;
-private int idJugador1;
-private int idJugador2;
-private int idEstadio;
-private LocalDate fechaHora;
+private Torneo Torneo;
+private Jugador Jugador1;
+private Jugador Jugador2;
+private Estadio Estadio;
+private LocalDateTime fechaHora;
 private String Estado;
-private int idJugadorGanador;
+private Jugador JugadorGanador;
 private String resultado;
 private String instanciaTorneo;
 private boolean activo;
@@ -19,28 +20,28 @@ private boolean activo;
     public Partido() {
     }
 
-    public Partido(int idTorneo, int idJugador1, int idJugador2, int idEstadio, LocalDate fechaHora, String Estado, int idJugadorGanador, String resultado, String instanciaTorneo, boolean activo) {
-        this.idTorneo = idTorneo;
-        this.idJugador1 = idJugador1;
-        this.idJugador2 = idJugador2;
-        this.idEstadio = idEstadio;
+    public Partido(int idPartido, Torneo Torneo, Jugador Jugador1, Jugador Jugador2, Estadio Estadio, LocalDateTime fechaHora, String Estado, Jugador JugadorGanador, String resultado, String instanciaTorneo, boolean activo) {
+        this.idPartido = idPartido;
+        this.Torneo = Torneo;
+        this.Jugador1 = Jugador1;
+        this.Jugador2 = Jugador2;
+        this.Estadio = Estadio;
         this.fechaHora = fechaHora;
         this.Estado = Estado;
-        this.idJugadorGanador = idJugadorGanador;
+        this.JugadorGanador = JugadorGanador;
         this.resultado = resultado;
         this.instanciaTorneo = instanciaTorneo;
         this.activo = activo;
     }
 
-    public Partido(int idPartido, int idTorneo, int idJugador1, int idJugador2, int idEstadio, LocalDate fechaHora, String Estado, int idJugadorGanador, String resultado, String instanciaTorneo, boolean activo) {
-        this.idPartido = idPartido;
-        this.idTorneo = idTorneo;
-        this.idJugador1 = idJugador1;
-        this.idJugador2 = idJugador2;
-        this.idEstadio = idEstadio;
+    public Partido(Torneo Torneo, Jugador Jugador1, Jugador Jugador2, Estadio Estadio, LocalDateTime fechaHora, String Estado, Jugador JugadorGanador, String resultado, String instanciaTorneo, boolean activo) {
+        this.Torneo = Torneo;
+        this.Jugador1 = Jugador1;
+        this.Jugador2 = Jugador2;
+        this.Estadio = Estadio;
         this.fechaHora = fechaHora;
         this.Estado = Estado;
-        this.idJugadorGanador = idJugadorGanador;
+        this.JugadorGanador = JugadorGanador;
         this.resultado = resultado;
         this.instanciaTorneo = instanciaTorneo;
         this.activo = activo;
@@ -54,43 +55,43 @@ private boolean activo;
         this.idPartido = idPartido;
     }
 
-    public int getIdTorneo() {
-        return idTorneo;
+    public Torneo getTorneo() {
+        return Torneo;
     }
 
-    public void setIdTorneo(int idTorneo) {
-        this.idTorneo = idTorneo;
+    public void setTorneo(Torneo Torneo) {
+        this.Torneo = Torneo;
     }
 
-    public int getIdJugador1() {
-        return idJugador1;
+    public Jugador getJugador1() {
+        return Jugador1;
     }
 
-    public void setIdJugador1(int idJugador1) {
-        this.idJugador1 = idJugador1;
+    public void setJugador1(Jugador Jugador1) {
+        this.Jugador1 = Jugador1;
     }
 
-    public int getIdJugador2() {
-        return idJugador2;
+    public Jugador getJugador2() {
+        return Jugador2;
     }
 
-    public void setIdJugador2(int idJugador2) {
-        this.idJugador2 = idJugador2;
+    public void setJugador2(Jugador Jugador2) {
+        this.Jugador2 = Jugador2;
     }
 
-    public int getIdEstadio() {
-        return idEstadio;
+    public Estadio getEstadio() {
+        return Estadio;
     }
 
-    public void setIdEstadio(int idEstadio) {
-        this.idEstadio = idEstadio;
+    public void setEstadio(Estadio Estadio) {
+        this.Estadio = Estadio;
     }
 
-    public LocalDate getFechaHora() {
+    public LocalDateTime getFechaHora() {
         return fechaHora;
     }
 
-    public void setFechaHora(LocalDate fechaHora) {
+    public void setFechaHora(LocalDateTime fechaHora) {
         this.fechaHora = fechaHora;
     }
 
@@ -102,12 +103,12 @@ private boolean activo;
         this.Estado = Estado;
     }
 
-    public int getIdJugadorGanador() {
-        return idJugadorGanador;
+    public Jugador getJugadorGanador() {
+        return JugadorGanador;
     }
 
-    public void setIdJugadorGanador(int idJugadorGanador) {
-        this.idJugadorGanador = idJugadorGanador;
+    public void setJugadorGanador(Jugador JugadorGanador) {
+        this.JugadorGanador = JugadorGanador;
     }
 
     public String getResultado() {
@@ -136,8 +137,8 @@ private boolean activo;
 
     @Override
     public String toString() {
-        return "Partido{" + "idPartido=" + idPartido + ", idTorneo=" + idTorneo + ", idJugador1=" + idJugador1 + ", idJugador2=" + idJugador2 + ", idEstadio=" + idEstadio + ", fechaHora=" + fechaHora + ", Estado=" + Estado + ", idJugadorGanador=" + idJugadorGanador + ", resultado=" + resultado + ", instanciaTorneo=" + instanciaTorneo + ", activo=" + activo + '}';
+        return "Partido{" + "idPartido=" + idPartido + ", Torneo=" + Torneo + ", Jugador1=" + Jugador1 + ", Jugador2=" + Jugador2 + ", Estadio=" + Estadio + ", fechaHora=" + fechaHora + ", Estado=" + Estado + ", JugadorGanador=" + JugadorGanador + ", resultado=" + resultado + ", instanciaTorneo=" + instanciaTorneo + ", activo=" + activo + '}';
     }
 
-   
+    
 }

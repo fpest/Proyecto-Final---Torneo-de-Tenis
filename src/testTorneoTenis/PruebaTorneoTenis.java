@@ -17,6 +17,7 @@ public class PruebaTorneoTenis {
             JugadorData jd = new JugadorData(conexion);
             TorneoData td = new TorneoData(conexion);
             EstadioData ed = new EstadioData(conexion);
+            PartidoData pd = new PartidoData(conexion);
             /*
             Desde aqui Prueba de Jugador
             //Instancias de jugadores
@@ -161,8 +162,20 @@ public class PruebaTorneoTenis {
        
                  
                  Estadio e1 = new Estadio(22, "San Luis", "Junin 888",1, 1000,2000,30000,"Ladrillo",true);
-            
                  ed.guardarEstadio(e1);
+            
+               //  Partido p1 = new Partido(1,188,191,1,LocalDate.of(2021,11,06),"Programado",0,"0","0",true);
+            
+               
+                  
+//               ArrayList<Partido> listaPartidos = (ArrayList) pd.obtenerPartido(1);
+//            for (Partido partido : listaPartidos) {
+//                System.out.println(partido.toString());
+//            }
+            System.out.println(ed.buscarEstadio(1).toString());
+              
+           
+            
             
             
 

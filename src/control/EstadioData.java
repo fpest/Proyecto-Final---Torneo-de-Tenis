@@ -152,7 +152,7 @@ public class EstadioData {
     public Estadio buscarEstadio(int idEstadio) {
         Estadio estadio = null;
 
-        String sql = "SELECT * FROM estadio WHERE idEstadio=?";
+        String sql = "SELECT * FROM estadio WHERE IDEstadio=?";
         
 
         try {
