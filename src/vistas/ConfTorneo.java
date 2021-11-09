@@ -75,7 +75,7 @@ public class ConfTorneo extends javax.swing.JInternalFrame {
         DefaultTableModel model = (DefaultTableModel) tblPartidosTorneo.getModel();
         model.setRowCount(0);
 
-        List<Partido> listaPartidos = partidoData.obtenerPartidoTorneo(nombreTorneo, 1, estadioData, jugadorData, torneoData);
+        List<Partido> listaPartidos = partidoData.obtenerPartidoTorneo(nombreTorneo, 1);
 
         for (Partido partido : listaPartidos) {
 

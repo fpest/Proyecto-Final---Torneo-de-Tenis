@@ -29,11 +29,17 @@ public class PartidoData {
 
     private java.sql.Connection con;
  
+    private JugadorData jugadorData;
+    private EstadioData estadioData;
+    private TorneoData torneoData;
     
     public PartidoData(Conexion conexion) {
         try {
             con = conexion.getConexion();
        
+            jugadorData = new JugadorData(conexion);
+            estadioData = new EstadioData(conexion);
+            torneoData = new TorneoData(conexion);
             
         } catch (SQLException ex) {
             System.out.println("Error en la conexion ");
@@ -177,7 +183,7 @@ public class PartidoData {
         return convertToLocalDateTime(date);
     }
 
-    public List<Partido> obtenerPartido(int torneoActivo, EstadioData estadioData, JugadorData jugadorData, TorneoData torneoData) {
+    public List<Partido> obtenerPartido(int torneoActivo) {
         List<Partido> partidos = new ArrayList<>();
         Partido partido = null;
       
@@ -213,7 +219,7 @@ public class PartidoData {
     }
 
     
-    public List<Partido> obtenerPartidoTorneo(String torneoNombre, int torneoActivo, EstadioData estadioData, JugadorData jugadorData, TorneoData torneoData) {
+    public List<Partido> obtenerPartidoTorneo(String torneoNombre, int torneoActivo) {
         List<Partido> listaPartidos = new ArrayList<>();
         Partido partido = new Partido();
         
@@ -244,7 +250,7 @@ public class PartidoData {
     }
     
     
-    public Partido buscarPartido(int idPartido, EstadioData estadioData, JugadorData jugadorData, TorneoData torneoData) {
+    public Partido buscarPartido(int idPartido) {
         Partido partido = null;
         String formattedDateTime = partido.getFechaHora().format(formatter);
 
