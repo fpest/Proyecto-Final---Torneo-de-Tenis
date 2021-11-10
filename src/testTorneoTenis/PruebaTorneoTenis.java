@@ -161,7 +161,7 @@ public class PruebaTorneoTenis {
             */
        
                  
-                 Estadio e1 = new Estadio(22, "San Luis", "Junin 888",1, 1000,2000,30000,"Ladrillo",true);
+                 Estadio e1 = new Estadio(24, "La Punta", "Funes 999",1, 2000,3000,40000,"Cemento",true);
                  ed.guardarEstadio(e1);
             
                //  Partido p1 = new Partido(1,188,191,1,LocalDate.of(2021,11,06),"Programado",0,"0","0",true);

@@ -33,19 +33,26 @@ import modelo.*;
  */
 public class ConfTorneo extends javax.swing.JInternalFrame {
 
-    TorneoData torneoData;
-    PartidoData partidoData;
-    EstadioData estadioData;
-    JugadorData jugadorData;
+    private TorneoData torneoData;
+    private PartidoData partidoData;
+    private EstadioData estadioData;
+    private JugadorData jugadorData;
 
-    ArrayList<Jugador> listaJugadores = new ArrayList<>();
-    ArrayList<Torneo> listaTorneos = new ArrayList<>();
-    ArrayList<Estadio> listaEstadios = new ArrayList<>();
-    ArrayList<Partido> listaPartidos = new ArrayList<>();
-    Jugador jugador;
-    Torneo torneo;
-    Estadio estadio;
-    Partido partido;
+    private ArrayList<Jugador> listaJugadores = new ArrayList<>();
+    private ArrayList<Torneo> listaTorneos = new ArrayList<>();
+    private ArrayList<Estadio> listaEstadios = new ArrayList<>();
+    private ArrayList<Partido> listaPartidos = new ArrayList<>();
+//    private Jugador jugador;
+//    private Jugador jugador1;
+//    private Jugador jugador2;
+    private Jugador jugadorGanador;
+//    private Torneo torneo;
+//    private Estadio estadio;
+    private Partido partido;
+    
+    private int idJugador1=0;
+    private int idJugador2=0;
+    
 
     public ConfTorneo() {
         initComponents();
@@ -60,9 +67,12 @@ public class ConfTorneo extends javax.swing.JInternalFrame {
         this.jugadorData = jugadorData;
 
         partido = new Partido();
-
+        jugadorGanador = new Jugador();
+//        jugador1 = new Jugador();
+//        jugador2 = new Jugador();
         listaJugadores = (ArrayList) jugadorData.obtenerJugador();
 
+     
         llenarListaJugadores(true);
         llenarComboTorneos(true);
         llenarComboEstadios(true);
@@ -71,6 +81,28 @@ public class ConfTorneo extends javax.swing.JInternalFrame {
 
     }
 
+    //
+
+  /*  private void llenarTablaDePartidosFechaHora(Partido partido) {
+        DefaultTableModel model = (DefaultTableModel) tblPartidosTorneo.getModel();
+        model.setRowCount(0);
+
+        List<Partido> listaPartidos = partidoData.obtenerPartidoEstadioFecha(partido);
+
+        for (Partido partidoHora : listaPartidos) {
+
+            DecimalFormat formato = new DecimalFormat("00");
+            LocalDateTime fechaHoraFinalizacion = partidoHora.getFechaHora().plusHours(3);
+            
+            String fechaHora = formato.format(partidoHora.getFechaHora().getDayOfMonth()) + "-" + formato.format(partidoHora.getFechaHora().getMonthValue()) + "-" + partidoHora.getFechaHora().getYear() + " " + partidoHora.getFechaHora().getHour() + ":00 hs.";
+            String fechaHoraFin = formato.format(fechaHoraFinalizacion.getDayOfMonth()) + "-" + formato.format(fechaHoraFinalizacion.getMonthValue()) + "-" + fechaHoraFinalizacion.getYear() + " " + fechaHoraFinalizacion.getHour() + ":00 hs.";
+            
+            model.addRow(new Object[]{"Estadio " + partidoHora.getEstadio().getNumeroIdentificador(), partidoHora.getJugador1().getApellido() + ", " + partidoHora.getJugador1().getNombre(), partidoHora.getJugador2().getApellido() + ", " + partidoHora.getJugador2().getNombre(), fechaHora, fechaHoraFin});
+        }
+    }
+*/
+    
+    
     private void llenarTablaDePartidos(String nombreTorneo) {
         DefaultTableModel model = (DefaultTableModel) tblPartidosTorneo.getModel();
         model.setRowCount(0);
@@ -80,15 +112,13 @@ public class ConfTorneo extends javax.swing.JInternalFrame {
         for (Partido partido : listaPartidos) {
 
             DecimalFormat formato = new DecimalFormat("00");
-            //String valorFormateado = formato.format(jSpHora.getValue());
-
+            LocalDateTime fechaHoraFinalizacion = partido.getFechaHora().plusHours(3);
             
             String fechaHora = formato.format(partido.getFechaHora().getDayOfMonth()) + "-" + formato.format(partido.getFechaHora().getMonthValue()) + "-" + partido.getFechaHora().getYear() + " " + partido.getFechaHora().getHour() + ":00 hs.";
-            String fechaHoraFin = formato.format(partido.getFechaHora().getDayOfMonth()) + "-" + formato.format(partido.getFechaHora().getMonthValue()) + "-" + partido.getFechaHora().getYear() + " " + partido.getFechaHora().getHour() + ":00 hs.";
+            String fechaHoraFin = formato.format(fechaHoraFinalizacion.getDayOfMonth()) + "-" + formato.format(fechaHoraFinalizacion.getMonthValue()) + "-" + fechaHoraFinalizacion.getYear() + " " + fechaHoraFinalizacion.getHour() + ":00 hs.";
             
             model.addRow(new Object[]{"Estadio " + partido.getEstadio().getNumeroIdentificador(), partido.getJugador1().getApellido() + ", " + partido.getJugador1().getNombre(), partido.getJugador2().getApellido() + ", " + partido.getJugador2().getNombre(), fechaHora, fechaHoraFin});
         }
-
     }
 
     private void llenarComboTorneos(Boolean activo) {
@@ -413,8 +443,9 @@ public class ConfTorneo extends javax.swing.JInternalFrame {
 
     private void btnJugador1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugador1ActionPerformed
         if (txtBuscarJugador.getText() != "" && lstJugadores.getSelectedValue() instanceof Jugador) {
-            if (lstJugadores.getSelectedValue().getIdJugador() != partido.getJugador2().getIdJugador()) {
-                partido.getJugador1().setIdJugador(lstJugadores.getSelectedValue().getIdJugador());
+            if (lstJugadores.getSelectedValue().getIdJugador() != idJugador2) {
+                partido.setJugador1(lstJugadores.getSelectedValue());
+                idJugador1 = lstJugadores.getSelectedValue().getIdJugador();
                 btnJugador1.setText(lstJugadores.getSelectedValue().toString());
             } else {
                 JOptionPane.showMessageDialog(null, "Debe seleccionar un Jugador distinto al Jugador 2.");
@@ -426,8 +457,12 @@ public class ConfTorneo extends javax.swing.JInternalFrame {
 
     private void btnJugador2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugador2ActionPerformed
         if (txtBuscarJugador.getText() != "" && lstJugadores.getSelectedValue() instanceof Jugador) {
-            if (lstJugadores.getSelectedValue().getIdJugador() != partido.getJugador1().getIdJugador()) {
-                partido.getJugador2().setIdJugador(lstJugadores.getSelectedValue().getIdJugador());
+            if (lstJugadores.getSelectedValue().getIdJugador() != idJugador1) {
+                partido.setJugador2(lstJugadores.getSelectedValue());
+                idJugador2 = lstJugadores.getSelectedValue().getIdJugador();
+    
+                
+                
                 btnJugador2.setText(lstJugadores.getSelectedValue().toString());
             } else {
                 JOptionPane.showMessageDialog(null, "Debe seleccionar un Jugador distinto al Jugador 1.");
@@ -437,7 +472,7 @@ public class ConfTorneo extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnJugador2ActionPerformed
     }
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        dispose();
+          dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void txtBuscarJugadorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarJugadorKeyReleased
@@ -459,8 +494,10 @@ public class ConfTorneo extends javax.swing.JInternalFrame {
 
     private void limpiarSeleccion() {
         txtBuscarJugador.setText("");
-        partido.getJugador1().setIdJugador(0);
-        partido.getJugador2().setIdJugador(0);
+//        partido.getJugador1().setIdJugador(0);
+//        partido.getJugador2().setIdJugador(0);
+        idJugador1=0;
+        idJugador2=0;
         btnJugador1.setText("Jugador 1");
         btnJugador2.setText("Jugador 2");
         jDateFechaInicio.setDate(null);
@@ -476,13 +513,13 @@ public class ConfTorneo extends javax.swing.JInternalFrame {
         boolean validado = true;
 
         // verificamos Jugadores (hay que verificar que estos jugadores no esten en otro partido)
-        if (btnJugador1.getText() != "Jugador 1" && partido.getJugador1().getIdJugador() != 0) {
+        if (btnJugador1.getText() != "Jugador 1" && idJugador1 != 0) {
 
         } else {
             JOptionPane.showMessageDialog(null, "Seleccionar Jugador 1.");
             return false;
         }
-        if (btnJugador2.getText() != "Jugador 2" && partido.getJugador1().getIdJugador() != 0) {
+        if (btnJugador2.getText() != "Jugador 2" && idJugador2 != 0) {
 
         } else {
             JOptionPane.showMessageDialog(null, "Seleccionar Jugador 2.");
@@ -507,6 +544,10 @@ public class ConfTorneo extends javax.swing.JInternalFrame {
 
 
     private void bntAgendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntAgendarActionPerformed
+        
+        
+        
+        
         if (validar()) {
 
             partido.setActivo(true);
@@ -514,12 +555,13 @@ public class ConfTorneo extends javax.swing.JInternalFrame {
             //partido.setFechaHora(convertToLocalDate(jDateFechaInicio.getDate()));
 
             Estadio est = (Estadio) cbEstadio.getSelectedItem();
-            partido.getEstadio().setIdEstadio(est.getIdEstadio());
+            partido.setEstadio(est);
 
             Torneo tor = (Torneo) cbTorneos.getSelectedItem();
-            partido.getTorneo().setIdTorneo(tor.getIdTorneo());
+            partido.setTorneo(tor);
 
-            partido.getJugadorGanador().setIdJugador(0);
+            
+            partido.setJugadorGanador(jugadorGanador);
             partido.setResultado("");
             partido.setInstanciaTorneo("");
 
@@ -537,6 +579,14 @@ public class ConfTorneo extends javax.swing.JInternalFrame {
 
             partido.setFechaHora(fechaHora);
 
+            if (!partidoData.obtenerPartidoJugadoresFecha(partido).isEmpty()){
+                JOptionPane.showMessageDialog(null, "Al menos uno de los Jugadores tiene partido agendado para este horario.");
+            }else{
+            
+            if (!partidoData.obtenerPartidoEstadioFecha(partido).isEmpty()){
+                JOptionPane.showMessageDialog(null, "El estadio está ocupado en ese horario.");
+            }else{
+            
             String confirmacion = "Torneo: " + cbTorneos.getSelectedItem().toString() + "\nEstadio: " + cbEstadio.getSelectedItem().toString() + "\nJugador 1: " + btnJugador1.getText() + "\nJugador 2: " + btnJugador2.getText() + "\nFecha Hora: " + fechaInicio + " " + jSpHora.getValue() + " hs.";
 
             if (JOptionPane.showConfirmDialog(null, confirmacion, "Confirma Registro?",
@@ -545,8 +595,9 @@ public class ConfTorneo extends javax.swing.JInternalFrame {
                 registrarPartido(partido);
 
             }
-
-        }
+            }
+            }
+            }
 
     }//GEN-LAST:event_bntAgendarActionPerformed
 

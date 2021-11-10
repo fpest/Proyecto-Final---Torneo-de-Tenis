@@ -6,7 +6,9 @@ import java.time.LocalDate;
 
 
 public class Patrocinio {
-    int idPatrocinio, idJugador, idPatrocinador;
+    int idPatrocinio;
+    Jugador jugador;
+    Patrocinador patrocinador;
     String indumentaria;
     LocalDate fechaContraroIn, fechaContratoFn;
     boolean activo;
@@ -14,19 +16,19 @@ public class Patrocinio {
     public Patrocinio() {
     }
 
-    public Patrocinio(int idJugador, int idPatrocinador, String indumentaria, LocalDate fechaContraroIn, LocalDate fechaContratoFn, boolean activo) {
-        this.idJugador = idJugador;
-        this.idPatrocinador = idPatrocinador;
+    public Patrocinio(int idPatrocinio, Jugador jugador, Patrocinador patrocinador, String indumentaria, LocalDate fechaContraroIn, LocalDate fechaContratoFn, boolean activo) {
+        this.idPatrocinio = idPatrocinio;
+        this.jugador = jugador;
+        this.patrocinador = patrocinador;
         this.indumentaria = indumentaria;
         this.fechaContraroIn = fechaContraroIn;
         this.fechaContratoFn = fechaContratoFn;
         this.activo = activo;
     }
 
-    public Patrocinio(int idPatrocinio, int idJugador, int idPatrocinador, String indumentaria, LocalDate fechaContraroIn, LocalDate fechaContratoFn, boolean activo) {
-        this.idPatrocinio = idPatrocinio;
-        this.idJugador = idJugador;
-        this.idPatrocinador = idPatrocinador;
+    public Patrocinio(Jugador jugador, Patrocinador patrocinador, String indumentaria, LocalDate fechaContraroIn, LocalDate fechaContratoFn, boolean activo) {
+        this.jugador = jugador;
+        this.patrocinador = patrocinador;
         this.indumentaria = indumentaria;
         this.fechaContraroIn = fechaContraroIn;
         this.fechaContratoFn = fechaContratoFn;
@@ -41,20 +43,20 @@ public class Patrocinio {
         this.idPatrocinio = idPatrocinio;
     }
 
-    public int getIdJugador() {
-        return idJugador;
+    public Jugador getJugador() {
+        return jugador;
     }
 
-    public void setIdJugador(int idJugador) {
-        this.idJugador = idJugador;
+    public void setJugador(Jugador jugador) {
+        this.jugador = jugador;
     }
 
-    public int getIdPatrocinador() {
-        return idPatrocinador;
+    public Patrocinador getPatrocinador() {
+        return patrocinador;
     }
 
-    public void setIdPatrocinador(int idPatrocinador) {
-        this.idPatrocinador = idPatrocinador;
+    public void setPatrocinador(Patrocinador patrocinador) {
+        this.patrocinador = patrocinador;
     }
 
     public String getIndumentaria() {
@@ -91,9 +93,9 @@ public class Patrocinio {
 
     @Override
     public String toString() {
-        return "Patrocinio{" + "idPatrocinio=" + idPatrocinio + ", idJugador=" + idJugador + ", idPatrocinador=" + idPatrocinador + ", indumentaria=" + indumentaria + ", fechaContraroIn=" + fechaContraroIn + ", fechaContratoFn=" + fechaContratoFn + ", activo=" + activo + '}';
+        return "Patrocinio{" + "idPatrocinio=" + idPatrocinio + ", jugador=" + jugador + ", patrocinador=" + patrocinador + ", indumentaria=" + indumentaria + ", fechaContraroIn=" + fechaContraroIn + ", fechaContratoFn=" + fechaContratoFn + ", activo=" + activo + '}';
     }
-    
+
     
 }
 
