@@ -168,7 +168,7 @@ public class PruebaTorneoTenis {
             
             
             //Desde Aqui Prueba de EstadioData
-            
+            /*
             int idEstadio=0;
             
             //Instancias de Estadios
@@ -190,8 +190,9 @@ public class PruebaTorneoTenis {
             System.out.println("Mostramos la lista de los Estadios");
             ArrayList<Estadio> listaEstadios = (ArrayList)ed.obtenerEstadio();
             for (Estadio estadio : listaEstadios) {
-                System.out.println("Estadio N: " + estadio.getNumeroIdentificador() +" - "+ estadio.getCategoria() + " - Activo: " + estadio.isActivo()  );
             idEstadio = estadio.getIdEstadio();
+                System.out.println("Estadio N: " + estadio.getNumeroIdentificador() +" - "+ estadio.getCategoria() + " - Activo: " + estadio.isActivo() + "El ID del estadio es : " + idEstadio) ;
+            
             }
             
             //Buscar Estadio
@@ -199,24 +200,24 @@ public class PruebaTorneoTenis {
             System.out.println("Se busca y se imprime datos de un Estadio");
             System.out.println(ed.buscarEstadio(idEstadio).toString());
             
-            //Desactivar Torneo
+            //Desactivar Estadio
             System.out.println("");
             System.out.println("Se desactiva un Estadio y se imprime la lista");
-            ed.desactivarEstadio(e1);
+            ed.desactivarEstadio(ed.buscarEstadio(idEstadio));
             //Comprobamos si se desactivo
+            listaEstadios = (ArrayList)ed.obtenerEstadio();
             for (Estadio estadio : listaEstadios) {
                 System.out.println("Estadio N: " + estadio.getNumeroIdentificador() +" - "+ estadio.getCategoria() + " - Activo: " + estadio.isActivo()  );
-            idEstadio = estadio.getIdEstadio();
             }
             
             //Activar Torneo
             System.out.println("");
             System.out.println("Se Activa el mismo estadio y se imprime la lista");
-            ed.activarEstadio(e1);
+            ed.activarEstadio(ed.buscarEstadio(idEstadio));
             //Comprobamos si se Activo
+            listaEstadios = (ArrayList)ed.obtenerEstadio();
             for (Estadio estadio : listaEstadios) {
                 System.out.println("Estadio N: " + estadio.getNumeroIdentificador() +" - "+ estadio.getCategoria() + " - Activo: " + estadio.isActivo()  );
-            idEstadio = estadio.getIdEstadio();
             }
             System.out.println("");
             System.out.println("Se imprimen los estadios que estan en Londres");
@@ -230,35 +231,13 @@ public class PruebaTorneoTenis {
             System.out.println("Se borra un estadio y se imprime la lista");
             ed.borrarEstadio(idEstadio);
             //Comprobamos que se haya borrado
+            listaEstadios = (ArrayList)ed.obtenerEstadio();
             for (Estadio estadio : listaEstadios) {
                 System.out.println("Estadio N: " + estadio.getNumeroIdentificador() +" - "+ estadio.getCategoria() + " - Activo: " + estadio.isActivo()  );
-            idEstadio = estadio.getIdEstadio();
             }
-            
-            
-            
-            
-            
+            */
             // Hasta aqui Prueba EstadioData
             
-            
-            
-            
-            
-                 
-                 ed.guardarEstadio(e1);
-            
-               //  Partido p1 = new Partido(1,188,191,1,LocalDate.of(2021,11,06),"Programado",0,"0","0",true);
-            
-               
-                  
-//               ArrayList<Partido> listaPartidos = (ArrayList) pd.obtenerPartido(1);
-//            for (Partido partido : listaPartidos) {
-//                System.out.println(partido.toString());
-//            }
-            System.out.println(ed.buscarEstadio(1).toString());
-              
-           
             
             
             
