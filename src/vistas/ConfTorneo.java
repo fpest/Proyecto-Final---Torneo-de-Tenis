@@ -573,11 +573,11 @@ public class ConfTorneo extends javax.swing.JInternalFrame {
             partido.setFechaHora(fechaHora);
 
             if (!partidoData.obtenerPartidoJugadoresFecha(partido).isEmpty()){
-                JOptionPane.showMessageDialog(null, "Al menos uno de los Jugadores tiene partido agendado para este horario.");
+                JOptionPane.showMessageDialog(null, "Al menos uno de los Jugadores tiene partido agendado para este horario." + partido.getJugador1().getApellido() + "\n" + partido.getJugador2().getApellido() + "\n" + "Estadio: " + partido.getEstadio().getNumeroIdentificador() + "\n" + partido.getFechaHora());
             }else{
             
             if (!partidoData.obtenerPartidoEstadioFecha(partido).isEmpty()){
-                JOptionPane.showMessageDialog(null, "El estadio está ocupado en ese horario.");
+                JOptionPane.showMessageDialog(null, "El estadio está ocupado en ese horario." + partido.getJugador1().getApellido() + "\n" + partido.getJugador2().getApellido() + "\n" + "Estadio: " + partido.getEstadio().getNumeroIdentificador() + "\n" + partido.getFechaHora());
             }else{
             
             String confirmacion = "Torneo: " + cbTorneos.getSelectedItem().toString() + "\nEstadio: " + cbEstadio.getSelectedItem().toString() + "\nJugador 1: " + btnJugador1.getText() + "\nJugador 2: " + btnJugador2.getText() + "\nFecha Hora: " + fechaInicio + " " + jSpHora.getValue() + " hs.";

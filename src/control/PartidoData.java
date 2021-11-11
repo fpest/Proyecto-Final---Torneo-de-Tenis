@@ -28,19 +28,19 @@ import modelo.Torneo;
 public class PartidoData {
 
     private java.sql.Connection con;
- 
+
     private JugadorData jugadorData;
     private EstadioData estadioData;
     private TorneoData torneoData;
-    
+
     public PartidoData(Conexion conexion) {
         try {
             con = conexion.getConexion();
-       
+
             jugadorData = new JugadorData(conexion);
             estadioData = new EstadioData(conexion);
             torneoData = new TorneoData(conexion);
-            
+
         } catch (SQLException ex) {
             System.out.println("Error en la conexion ");
         }
@@ -53,17 +53,14 @@ public class PartidoData {
         String sql = "INSERT INTO `partido`(`IDTorneo`, `IDJugador1`, `IDJugador2`, `IDEstadio`, `FechaHora`, `Estado`,`Activo`) VALUES (?,?,?,?,?,?,?)";
         try {
 
-            System.out.println("aqui "+ partido.getJugador1() );
-            
-            
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, partido.getTorneo().getIdTorneo());
             ps.setInt(2, partido.getJugador1().getIdJugador());
             ps.setInt(3, partido.getJugador2().getIdJugador());
             ps.setInt(4, partido.getEstadio().getIdEstadio());
-            
+
             ps.setString(5, formattedDateTime);
-            
+
             ps.setString(6, partido.getEstado());
             ps.setBoolean(7, partido.isActivo());
 
@@ -85,7 +82,7 @@ public class PartidoData {
         boolean guardado = true;
         String formattedDateTime = partido.getFechaHora().format(formatter);
         String sql = "INSERT INTO `partido`(`IDTorneo`, `IDJugador1`, `IDJugador2`, `IDEstadio`, `FechaHora`, `Estado`, `IDJugadorGanador`, `Resultado`, `InstanciaTorneo`, `Activo`) VALUES (?,?,?,?,?,?,?,?,?,?)";
-        try {
+        try {// 
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, partido.getTorneo().getIdTorneo());
             ps.setInt(2, partido.getJugador1().getIdJugador());
@@ -158,7 +155,6 @@ public class PartidoData {
 
     public boolean desactivarPartido(Partido partido) {
         partido.setActivo(false);
-        partido.toString();
         return actualizarPartido(partido);
     }
 
@@ -189,16 +185,13 @@ public class PartidoData {
     public List<Partido> obtenerPartido(int torneoActivo) {
         List<Partido> partidos = new ArrayList<>();
         Partido partido = null;
-      
-        
-        
-        
+
         String sql = "SELECT * FROM `partido` WHERE `Activo`= " + torneoActivo;
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                
+
                 partido = new Partido();
                 partido.setIdPartido(rs.getInt("IDPartido"));
                 partido.setTorneo(torneoData.buscarTorneo(rs.getInt("IDTorneo")));
@@ -221,136 +214,30 @@ public class PartidoData {
         return partidos;
     }
 
-    
     public List<Partido> obtenerPartidoEstadioFecha(Partido partido) {
-    
+
         String formattedDateTime = partido.getFechaHora().format(formatter);
-        
+
         List<Partido> listaPartidos = new ArrayList<>();
 
-             
-       // String sql = "SELECT `IDJugador1`, `IDJugador2`, `FechaHora` FROM `partido` WHERE `IDEstadio` = " + partido.getEstadio().getIdEstadio() + " and (`FechaHora` BETWEEN \"" + formattedDateTime + "\" and DATE_ADD(\"" + formattedDateTime + "\",INTERVAL 3 HOUR))";
-        String sql = "SELECT `IDJugador1`, `IDJugador2`, `FechaHora` FROM `partido` WHERE `IDEstadio` = " + partido.getEstadio().getIdEstadio() + " and (`FechaHora` BETWEEN \"" + formattedDateTime + "\" and DATE_ADD(\"" + formattedDateTime + "\",INTERVAL 3 HOUR)) || (DATE_ADD(`FechaHora`,INTERVAL 3 HOUR) BETWEEN \"" + formattedDateTime + "\" and DATE_ADD(\"" + formattedDateTime + "\",INTERVAL 3 HOUR))";
-    
-     
+        // String sql = "SELECT `IDJugador1`, `IDJugador2`, `FechaHora` FROM `partido` WHERE `IDEstadio` = " + partido.getEstadio().getIdEstadio() + " and (`FechaHora` BETWEEN \"" + formattedDateTime + "\" and DATE_ADD(\"" + formattedDateTime + "\",INTERVAL 3 HOUR))";
+        String sql = "SELECT * FROM `partido` WHERE `IDEstadio` = " + partido.getEstadio().getIdEstadio() + " and ((`FechaHora` BETWEEN \"" + formattedDateTime + "\" and DATE_ADD(\"" + formattedDateTime + "\",INTERVAL 3 HOUR)) || (DATE_ADD(`FechaHora`,INTERVAL 3 HOUR) BETWEEN \"" + formattedDateTime + "\" and DATE_ADD(\"" + formattedDateTime + "\",INTERVAL 3 HOUR)))";
+
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            
-            
-            
+
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 partido = new Partido();
-                Estadio estadio = new Estadio();
-          
-                estadio = estadioData.buscarEstadio(1);
-                
-                partido.setJugador1(jugadorData.buscarJugador(rs.getInt("IDJugador1")));
-                partido.setJugador2(jugadorData.buscarJugador(rs.getInt("IDJugador2")));
-                partido.setFechaHora(deMysqlALocalDateTime(rs.getObject("FechaHora").toString()));
-               
-    
-                listaPartidos.add(partido);
+//                Estadio estadio = new Estadio();
+//          
+//                estadio = estadioData.buscarEstadio(1);
+//                
+//                partido.setJugador1(jugadorData.buscarJugador(rs.getInt("IDJugador1")));
+//                partido.setJugador2(jugadorData.buscarJugador(rs.getInt("IDJugador2")));
+//                partido.setFechaHora(deMysqlALocalDateTime(rs.getObject("FechaHora").toString()));
+//               
 
-            }
-            ps.close();
-        } catch (SQLException ex) {
-            System.out.println("Error al buscar los registros AQUI ");
-        }
-        return listaPartidos;
-    }
-    
-
-    
-    public List<Partido> obtenerPartidoJugadoresFecha(Partido partido) {
-    
-        String formattedDateTime = partido.getFechaHora().format(formatter);
-        
-        List<Partido> listaPartidos = new ArrayList<>();
-
-             
-       // String sql = "SELECT `IDJugador1`, `IDJugador2`, `FechaHora` FROM `partido` WHERE `IDEstadio` = " + partido.getEstadio().getIdEstadio() + " and (`FechaHora` BETWEEN \"" + formattedDateTime + "\" and DATE_ADD(\"" + formattedDateTime + "\",INTERVAL 3 HOUR))";
-        String sql = "SELECT `IDTorneo`, `IDEstadio`, `FechaHora` FROM `partido` WHERE (`IDJugador1` = " + partido.getJugador1().getIdJugador() + " or `IDJugador2` = " + partido.getJugador2().getIdJugador() + ") and (`FechaHora` BETWEEN \"" + formattedDateTime + "\" and DATE_ADD(\"" + formattedDateTime + "\",INTERVAL 3 HOUR)) or (DATE_ADD(`FechaHora`,INTERVAL 3 HOUR) BETWEEN \"" + formattedDateTime + "\" and DATE_ADD(\"" + formattedDateTime + "\",INTERVAL 3 HOUR))";
-    
-     JOptionPane.showMessageDialog(null,sql); 
-        System.out.println(sql);
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            
-            
-            
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                partido = new Partido();
-                Estadio estadio = new Estadio();
-          
-                estadio = estadioData.buscarEstadio(1);
-                
-                partido.setTorneo(torneoData.buscarTorneo(rs.getInt("IDTorneo")));
-                partido.setEstadio(estadioData.buscarEstadio(rs.getInt("IDEstadio")));
-                partido.setFechaHora(deMysqlALocalDateTime(rs.getObject("FechaHora").toString()));
-               
-    
-                listaPartidos.add(partido);
-
-            }
-            ps.close();
-        } catch (SQLException ex) {
-            System.out.println("Error al buscar los registros AQUI ");
-        }
-        return listaPartidos;
-    }
-    
-    
-    
-    
-    
-    public List<Partido> obtenerPartidoTorneo(String torneoNombre, int torneoActivo) {
-        List<Partido> listaPartidos = new ArrayList<>();
-        Partido partido = new Partido();
-        
-        String sql = "SELECT est.IDEstadio, est.NumeroIdentificador, ju1.IDJugador, ju1.Apellido, ju1.Nombre, ju2.IDJugador, ju2.Apellido, ju2.Nombre, FechaHora  FROM `partido` pa JOIN `torneo` tor on pa.IDTorneo = tor.IDTorneo JOIN `estadio`est on pa.IDEstadio = est.IdEstadio JOIN `jugador` ju1 on pa.IDJugador1 = ju1.IDJugador JOIN `jugador` ju2 on pa.IDJugador2 = ju2.IDJugador WHERE tor.Nombre = \"" + torneoNombre + "\" and pa.Activo = " + torneoActivo;
-        
-       
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                partido = new Partido();
-                Estadio estadio = new Estadio();
-                
-             //   estadio = estadioData.buscarEstadio(1);
-               
-                partido.setEstadio(estadioData.buscarEstadio(rs.getInt("est.IDEstadio")));
-                partido.setJugador1(jugadorData.buscarJugador(rs.getInt("ju1.IDJugador")));
-                partido.setJugador2(jugadorData.buscarJugador(rs.getInt("ju2.IDJugador")));
-                partido.setFechaHora(deMysqlALocalDateTime(rs.getObject("FechaHora").toString()));
-               
-                listaPartidos.add(partido);
-            }
-            ps.close();
-        } catch (SQLException ex) {
-            System.out.println("Error al buscar los registros ");
-        }
-        return listaPartidos;
-    }
-    
-    
-    public Partido buscarPartido(int idPartido) {
-        Partido partido = null;
-        String formattedDateTime = partido.getFechaHora().format(formatter);
-
-        String sql = "SELECT * FROM partido WHERE IDPartido=?";
-        
-
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, idPartido);
-
-            
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-               partido = new Partido();
                 partido.setIdPartido(rs.getInt("IDPartido"));
                 partido.setTorneo(torneoData.buscarTorneo(rs.getInt("IDTorneo")));
                 partido.setJugador1(jugadorData.buscarJugador(rs.getInt("IDJugador1")));
@@ -363,11 +250,119 @@ public class PartidoData {
                 partido.setInstanciaTorneo(rs.getString("InstanciaTorneo"));
                 partido.setActivo(rs.getBoolean("Activo"));
 
-}
+                listaPartidos.add(partido);
+
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            System.out.println("Error al buscar los registros AQUI ");
+        }
+        return listaPartidos;
+    }
+
+    public List<Partido> obtenerPartidoJugadoresFecha(Partido partido) {
+
+        String formattedDateTime = partido.getFechaHora().format(formatter);
+
+        List<Partido> listaPartidos = new ArrayList<>();
+
+        // String sql = "SELECT `IDJugador1`, `IDJugador2`, `FechaHora` FROM `partido` WHERE `IDEstadio` = " + partido.getEstadio().getIdEstadio() + " and (`FechaHora` BETWEEN \"" + formattedDateTime + "\" and DATE_ADD(\"" + formattedDateTime + "\",INTERVAL 3 HOUR))";
+        String sql = "SELECT * FROM `partido` WHERE (`IDJugador1` = " + partido.getJugador1().getIdJugador() + " or `IDJugador2` = " + partido.getJugador2().getIdJugador() + ") and ((`FechaHora` BETWEEN \"" + formattedDateTime + "\" and DATE_ADD(\"" + formattedDateTime + "\",INTERVAL 3 HOUR)) or (DATE_ADD(`FechaHora`,INTERVAL 3 HOUR) BETWEEN \"" + formattedDateTime + "\" and DATE_ADD(\"" + formattedDateTime + "\",INTERVAL 3 HOUR)))";
+
+        // JOptionPane.showMessageDialog(null,sql); 
+        System.out.println(sql);
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                partido = new Partido();
+//                Estadio estadio = new Estadio();
+//                estadio = estadioData.buscarEstadio(1);
+//                partido.setTorneo(torneoData.buscarTorneo(rs.getInt("IDTorneo")));
+//                partido.setEstadio(estadioData.buscarEstadio(rs.getInt("IDEstadio")));
+//                partido.setFechaHora(deMysqlALocalDateTime(rs.getObject("FechaHora").toString()));
+//               
+                partido.setIdPartido(rs.getInt("IDPartido"));
+                partido.setTorneo(torneoData.buscarTorneo(rs.getInt("IDTorneo")));
+                partido.setJugador1(jugadorData.buscarJugador(rs.getInt("IDJugador1")));
+                partido.setJugador2(jugadorData.buscarJugador(rs.getInt("IDJugador2")));
+                partido.setEstadio(estadioData.buscarEstadio(rs.getInt("IDEstadio")));
+                partido.setFechaHora(deMysqlALocalDateTime(rs.getObject("FechaHora").toString()));
+                partido.setEstado(rs.getString("Estado"));
+                partido.setJugadorGanador(jugadorData.buscarJugador(rs.getInt("IDJugadorGanador")));
+                partido.setResultado(rs.getString("Resultado"));
+                partido.setInstanciaTorneo(rs.getString("InstanciaTorneo"));
+                partido.setActivo(rs.getBoolean("Activo"));
+
+                listaPartidos.add(partido);
+
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            System.out.println("Error al buscar los registros AQUI ");
+        }
+        return listaPartidos;
+    }
+
+    public List<Partido> obtenerPartidoTorneo(String torneoNombre, int torneoActivo) {
+        List<Partido> listaPartidos = new ArrayList<>();
+        Partido partido = new Partido();
+
+        String sql = "SELECT est.IDEstadio, est.NumeroIdentificador, ju1.IDJugador, ju1.Apellido, ju1.Nombre, ju2.IDJugador, ju2.Apellido, ju2.Nombre, FechaHora  FROM `partido` pa JOIN `torneo` tor on pa.IDTorneo = tor.IDTorneo JOIN `estadio`est on pa.IDEstadio = est.IdEstadio JOIN `jugador` ju1 on pa.IDJugador1 = ju1.IDJugador JOIN `jugador` ju2 on pa.IDJugador2 = ju2.IDJugador WHERE tor.Nombre = \"" + torneoNombre + "\" and pa.Activo = " + torneoActivo;
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                partido = new Partido();
+                Estadio estadio = new Estadio();
+
+                //   estadio = estadioData.buscarEstadio(1);
+                partido.setEstadio(estadioData.buscarEstadio(rs.getInt("est.IDEstadio")));
+                partido.setJugador1(jugadorData.buscarJugador(rs.getInt("ju1.IDJugador")));
+                partido.setJugador2(jugadorData.buscarJugador(rs.getInt("ju2.IDJugador")));
+                partido.setFechaHora(deMysqlALocalDateTime(rs.getObject("FechaHora").toString()));
+
+                listaPartidos.add(partido);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            System.out.println("Error al buscar los registros ");
+        }
+        return listaPartidos;
+    }
+
+    public Partido buscarPartido(int idPartido) {
+        Partido partido = null;
+
+        //  String formattedDateTime = partido.getFechaHora().format(formatter);
+        String sql = "SELECT * FROM partido WHERE IDPartido=?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idPartido);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                partido = new Partido();
+                partido.setIdPartido(rs.getInt("IDPartido"));
+                partido.setTorneo(torneoData.buscarTorneo(rs.getInt("IDTorneo")));
+                partido.setJugador1(jugadorData.buscarJugador(rs.getInt("IDJugador1")));
+                partido.setJugador2(jugadorData.buscarJugador(rs.getInt("IDJugador2")));
+                partido.setEstadio(estadioData.buscarEstadio(rs.getInt("IDEstadio")));
+                partido.setFechaHora(deMysqlALocalDateTime(rs.getObject("FechaHora").toString()));
+                partido.setEstado(rs.getString("Estado"));
+                partido.setJugadorGanador(jugadorData.buscarJugador(rs.getInt("IDJugadorGanador")));
+                partido.setResultado(rs.getString("Resultado"));
+                partido.setInstanciaTorneo(rs.getString("InstanciaTorneo"));
+                partido.setActivo(rs.getBoolean("Activo"));
+
+            }
         } catch (SQLException ex) {
             System.out.println("Error al buscar partido.");
         }
         return partido;
     }
-     
+
 }

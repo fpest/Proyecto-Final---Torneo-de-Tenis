@@ -46,7 +46,7 @@ private boolean activo;
 
     @Override
     public String toString() {
-        return "Patrocinador{" + "idPatrocinador=" + idPatrocinador + ", marca=" + marca + ", activo=" + activo + '}';
+        return  marca;
     }
 
 

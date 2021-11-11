@@ -44,7 +44,7 @@ public class JugadorData {
             ResultSet rs = ps.getGeneratedKeys();
 
             if (rs.next()) {
-                jugador.setIdJugador(rs.getInt("idJugador"));
+                jugador.setIdJugador(rs.getInt("IDJugador"));
             }
             ps.close();
         } catch (SQLException ex) {

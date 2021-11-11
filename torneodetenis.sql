@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-11-2021 a las 11:41:51
+-- Tiempo de generación: 12-11-2021 a las 00:37:22
 -- Versión del servidor: 10.4.21-MariaDB
 -- Versión de PHP: 8.0.11
 
@@ -75,7 +75,7 @@ CREATE TABLE `partido` (
   `Estado` varchar(15) NOT NULL DEFAULT 'Programado',
   `IDJugadorGanador` int(11) DEFAULT NULL,
   `Resultado` varchar(50) DEFAULT NULL,
-  `InstanciaTorneo` varchar(20) NOT NULL,
+  `InstanciaTorneo` varchar(20) DEFAULT NULL,
   `Activo` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -94,10 +94,10 @@ CREATE TABLE `patrocinador` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `patrocionio`
+-- Estructura de tabla para la tabla `patrocinio`
 --
 
-CREATE TABLE `patrocionio` (
+CREATE TABLE `patrocinio` (
   `IDPatrocinio` int(11) NOT NULL,
   `IDJugador` int(11) NOT NULL,
   `IDPatrocinador` int(11) NOT NULL,
@@ -158,9 +158,9 @@ ALTER TABLE `patrocinador`
   ADD UNIQUE KEY `Marca` (`Marca`);
 
 --
--- Indices de la tabla `patrocionio`
+-- Indices de la tabla `patrocinio`
 --
-ALTER TABLE `patrocionio`
+ALTER TABLE `patrocinio`
   ADD PRIMARY KEY (`IDPatrocinio`),
   ADD KEY `IDJugador` (`IDJugador`,`IDPatrocinador`),
   ADD KEY `IDPatrocinador` (`IDPatrocinador`);
@@ -180,37 +180,37 @@ ALTER TABLE `torneo`
 -- AUTO_INCREMENT de la tabla `estadio`
 --
 ALTER TABLE `estadio`
-  MODIFY `IDEstadio` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IDEstadio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT de la tabla `jugador`
 --
 ALTER TABLE `jugador`
-  MODIFY `IDJugador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=187;
+  MODIFY `IDJugador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=204;
 
 --
 -- AUTO_INCREMENT de la tabla `partido`
 --
 ALTER TABLE `partido`
-  MODIFY `IDPartido` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IDPartido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT de la tabla `patrocinador`
 --
 ALTER TABLE `patrocinador`
-  MODIFY `IDPatrocinador` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IDPatrocinador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT de la tabla `patrocionio`
+-- AUTO_INCREMENT de la tabla `patrocinio`
 --
-ALTER TABLE `patrocionio`
-  MODIFY `IDPatrocinio` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `patrocinio`
+  MODIFY `IDPatrocinio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT de la tabla `torneo`
 --
 ALTER TABLE `torneo`
-  MODIFY `IDTorneo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IDTorneo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Restricciones para tablas volcadas
@@ -227,11 +227,11 @@ ALTER TABLE `partido`
   ADD CONSTRAINT `partido_ibfk_5` FOREIGN KEY (`IDJugadorGanador`) REFERENCES `jugador` (`IDJugador`);
 
 --
--- Filtros para la tabla `patrocionio`
+-- Filtros para la tabla `patrocinio`
 --
-ALTER TABLE `patrocionio`
-  ADD CONSTRAINT `patrocionio_ibfk_1` FOREIGN KEY (`IDPatrocinador`) REFERENCES `patrocinador` (`IDPatrocinador`),
-  ADD CONSTRAINT `patrocionio_ibfk_2` FOREIGN KEY (`IDJugador`) REFERENCES `jugador` (`IDJugador`);
+ALTER TABLE `patrocinio`
+  ADD CONSTRAINT `patrocinio_ibfk_1` FOREIGN KEY (`IDPatrocinador`) REFERENCES `patrocinador` (`IDPatrocinador`),
+  ADD CONSTRAINT `patrocinio_ibfk_2` FOREIGN KEY (`IDJugador`) REFERENCES `jugador` (`IDJugador`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

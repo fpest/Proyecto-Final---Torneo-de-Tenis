@@ -2,7 +2,9 @@
 package testTorneoTenis;
 
 import control.*;
+import java.lang.reflect.Array;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import modelo.Conexion;
 import modelo.*;
@@ -17,11 +19,14 @@ public class PruebaTorneoTenis {
             JugadorData jd = new JugadorData(conexion);
             TorneoData td = new TorneoData(conexion);
             EstadioData ed = new EstadioData(conexion);
-            PartidoData pd = new PartidoData(conexion);
             PatrocinadorData pdd = new PatrocinadorData(conexion);
+            
+            PartidoData pd = new PartidoData(conexion);
             PatrocinioData pcd = new PatrocinioData(conexion);
+            
+            
+            //Desde aqui Prueba de Jugador
             /*
-            Desde aqui Prueba de Jugador
             //Instancias de jugadores
             int idJug=0;
        
@@ -127,16 +132,15 @@ public class PruebaTorneoTenis {
                 System.out.println("ID : " + jugadores.getIdJugador() + " - " + jugadores.getApellido() +" - DNI:"+ jugadores.getDni());
             }
             System.out.println("");
-            
-            //Hasta aqui Prueba de Jugador
             */
+            //Hasta aqui Prueba de Jugador
             
             
             
             
             //Desde Aqui Prueba de Torneo
             /*
-              //Instancias de Torneos
+            //Instancias de Torneos
             Torneo t1 = new Torneo("Brasil Open", LocalDate.of(2021, 11, 1), LocalDate.of(2021, 11, 30), true);
             Torneo t2 = new Torneo("Indian Wells", LocalDate.of(2021, 10, 7), LocalDate.of(2021, 10, 17), true);
             Torneo t3 = new Torneo("Australia Open", LocalDate.of(2021, 1, 27), LocalDate.of(2021, 1, 27), true);
@@ -162,8 +166,8 @@ public class PruebaTorneoTenis {
             for (Torneo torneos : listaTorneosRoma) {
                 System.out.println(torneos.toString());
             }
-            // Hasta aqui Prueba Torneo
             */
+            // Hasta aqui Prueba Torneo
        
             
             
@@ -237,6 +241,251 @@ public class PruebaTorneoTenis {
             }
             */
             // Hasta aqui Prueba EstadioData
+            
+            
+            //Desde Aqui Prueba de PatrocinadorData
+            /*
+            int idPatrocinador=0;
+            
+            //Instancias de Patrocinadores
+            Patrocinador p1 = new Patrocinador("Nike", true);
+            Patrocinador p2 = new Patrocinador("Adidas", true);
+            Patrocinador p3 = new Patrocinador("Babolad", true); 
+            Patrocinador p4 = new Patrocinador("Rolex", true);
+            
+            
+            //Guardar Patrocinador
+            pdd.guardarPatrocinador(p1); 
+            pdd.guardarPatrocinador(p2); 
+            pdd.guardarPatrocinador(p3); 
+            pdd.guardarPatrocinador(p4); 
+            
+            
+            //Obtener lista de patrocinadores y mostrar
+            System.out.println("Mostramos la lista de los Patrocinadores");
+            ArrayList<Patrocinador> listaPatrocinadores = (ArrayList)pdd.obtenerPatrocinador();
+            for (Patrocinador patrocinador : listaPatrocinadores) {
+            idPatrocinador = patrocinador.getIdPatrocinador();
+                System.out.println("Marca: " + patrocinador.getMarca() +" - Activo: " + patrocinador.isActivo() + " - El ID del patrocinador es : " + idPatrocinador) ;
+            
+            }
+            
+            //Buscar Patrocinador
+            System.out.println("");
+            System.out.println("Se busca y se imprime datos de un Patrocinador");
+            System.out.println(pdd.buscarPatrocinador(idPatrocinador).toString());
+            
+            //Desactivar Patrocinador
+            System.out.println("");
+            System.out.println("Se desactiva un Patrocinador y se imprime la lista");
+            pdd.desactivarPatrocinador(pdd.buscarPatrocinador(idPatrocinador));
+            //Comprobamos si se desactivo
+            listaPatrocinadores = (ArrayList)pdd.obtenerPatrocinador();
+            for (Patrocinador patrocinador: listaPatrocinadores) {
+                System.out.println("Marca: " + patrocinador.getMarca() +" - Activo: " + patrocinador.isActivo() + " - El ID del patrocinador es : " + patrocinador.getIdPatrocinador()) ;
+            
+            }
+            
+            //Activar Patrocinador
+            System.out.println("");
+            System.out.println("Se Activa el mismo Patrocinador y se imprime la lista");
+            pdd.activarPatrocinador(pdd.buscarPatrocinador(idPatrocinador));
+            //Comprobamos si se Activo
+            listaPatrocinadores = (ArrayList)pdd.obtenerPatrocinador();
+            for (Patrocinador patrocinador: listaPatrocinadores) {
+                System.out.println("Marca: " + patrocinador.getMarca() +" - Activo: " + patrocinador.isActivo() + " - El ID del patrocinador es : " + patrocinador.getIdPatrocinador()) ;
+            
+            }
+            
+            //Borramos un Patrocinador
+            System.out.println("");
+            System.out.println("Se borra un patrocinador y se imprime la lista");
+            pdd.borrarPatrocinador(idPatrocinador);
+            //Comprobamos que se haya borrado
+            listaPatrocinadores = (ArrayList)pdd.obtenerPatrocinador();
+            for (Patrocinador patrocinador: listaPatrocinadores) {
+                System.out.println("Marca: " + patrocinador.getMarca() +" - Activo: " + patrocinador.isActivo() + " - El ID del patrocinador es : " + patrocinador.getIdPatrocinador()) ;
+            
+            }
+            */
+            // Hasta aqui Prueba PatrocinadorData
+            
+            //Desde Aqui Prueba de PatrocinioData
+            /*
+            Patrocinador pt1=null;
+            Jugador jp1=null;
+            
+            ArrayList<Patrocinador> listaPatrocinadores = (ArrayList)pdd.obtenerPatrocinador();
+            for (Patrocinador patrocinador : listaPatrocinadores) {
+            pt1 = patrocinador;
+            }
+            
+            ArrayList<Jugador> listaJugadores = (ArrayList)jd.obtenerJugador();
+            for (Jugador jugador : listaJugadores) {
+            jp1 = jugador;
+            }
+                
+            int idPatrocinio=0;
+            
+            //Instancias de Patrocinios
+            Patrocinio pc1 = new Patrocinio(jp1, pt1, "Raqueta",LocalDate.of(2021, 8, 13),LocalDate.of(2022, 8, 13),true);
+            Patrocinio pc2 = new Patrocinio(jp1, pt1, "Remera",LocalDate.of(2021, 8, 13),LocalDate.of(2022, 8, 13),true);
+            
+            
+            //Guardar Patrocinador
+            pcd.guardarPatrocinio(pc1); 
+            pcd.guardarPatrocinio(pc2);
+            
+            //Obtener lista de patrocinio y mostrar
+            System.out.println("Mostramos la lista de los Patrocinios");
+            ArrayList<Patrocinio> listaPatrocinios = (ArrayList)pcd.obtenerPatrocinio();
+            for (Patrocinio patrocinio : listaPatrocinios) {
+            idPatrocinio = patrocinio.getIdPatrocinio();
+                System.out.println("indumentaria: " + patrocinio.getIndumentaria() +" - Activo: " + patrocinio.isActivo() + " - El ID del patrocinio es : " + idPatrocinio) ;
+            }
+            
+            //Buscar Patrocinio
+            System.out.println("");
+            System.out.println("Se busca y se imprime datos de un Patrocinio");
+            System.out.println(pcd.buscarPatrocinio(idPatrocinio).toString());
+            
+            //Desactivar Patrocinio
+            System.out.println("");
+            System.out.println("Se desactiva un Patrocinio y se imprime la lista");
+            pcd.desactivarPatrocinio(pcd.buscarPatrocinio(idPatrocinio));
+            //Comprobamos si se desactivo
+            listaPatrocinios = (ArrayList)pcd.obtenerPatrocinio();
+            for (Patrocinio patrocinio : listaPatrocinios) {
+            idPatrocinio = patrocinio.getIdPatrocinio();
+                System.out.println("indumentaria: " + patrocinio.getIndumentaria() +" - Activo: " + patrocinio.isActivo() + " - El ID del patrocinio es : " + patrocinio.getIdPatrocinio()) ;
+            
+            }
+            //Activar Patrocinio
+            System.out.println("");
+            System.out.println("Se Activa el mismo Patrocinio y se imprime la lista");
+            pcd.activarPatrocinio(pcd.buscarPatrocinio(idPatrocinio));
+            //Comprobamos si se Activo
+            listaPatrocinios = (ArrayList)pcd.obtenerPatrocinio();
+            for (Patrocinio patrocinio : listaPatrocinios) {
+            idPatrocinio = patrocinio.getIdPatrocinio();
+                System.out.println("indumentaria: " + patrocinio.getIndumentaria() +" - Activo: " + patrocinio.isActivo() + " - El ID del patrocinio es : " + patrocinio.getIdPatrocinio()) ;
+            
+            }
+            
+            //Borramos un Patrocinio
+            System.out.println("");
+            System.out.println("Se borra un patrocinio y se imprime la lista");
+            pcd.borrarPatrocinio(idPatrocinio);
+            //Comprobamos que se haya borrado
+            listaPatrocinios = (ArrayList)pcd.obtenerPatrocinio();
+            for (Patrocinio patrocinio : listaPatrocinios) {
+            idPatrocinio = patrocinio.getIdPatrocinio();
+                System.out.println("indumentaria: " + patrocinio.getIndumentaria() +" - Activo: " + patrocinio.isActivo() + " - El ID del patrocinio es : " + patrocinio.getIdPatrocinio()) ;
+            
+            }
+            */
+            // Hasta aqui Prueba PatrocinadorData
+            
+            
+            //Desde Aqui Prueba de PartidoData
+            /*            
+            Torneo tpar1=null;
+            Jugador[] jpar=new Jugador[10];
+            Estadio epar1=null;
+            
+            
+            ArrayList<Torneo> listaTorneos = (ArrayList)td.obtenerTodosLosTorneos();
+            for (Torneo torneo : listaTorneos) {
+            tpar1 = torneo;
+            }
+            
+            ArrayList<Jugador> listaJugadores = (ArrayList)jd.obtenerJugador();
+            int i=0;
+            for (Jugador jugador : listaJugadores) {
+            
+                jpar[i] = jugador;
+            i++;
+            }
+            
+            ArrayList<Estadio> listaEstadios = (ArrayList)ed.obtenerEstadio();
+            for (Estadio estadio : listaEstadios) {
+            epar1 = estadio;
+            }
+            
+            int idPartido=0;
+        
+             
+            //Instancias de Patrocinios
+            Partido par1 = new Partido(tpar1,jpar[0],jpar[1],epar1,LocalDateTime.of(2022,02,3,6,30,40,50000),"Programado",jpar[1],"61-62","Semi Final",true);
+            Partido par2 = new Partido(tpar1,jpar[2],jpar[3],epar1,LocalDateTime.of(2021,12,3,6,30,40,50000),"Programado",jpar[3],"64-64","Final",true);
+            
+            //Guardar Patrocinador
+            pd.guardarPartido(par1); 
+            pd.guardarPartido(par2);
+            
+            //Obtener lista de partido y mostrar
+            System.out.println("Mostramos la lista de los Partidos");
+            ArrayList<Partido> listaPartidos = (ArrayList)pd.obtenerPartido(1);
+            for (Partido partido : listaPartidos) {
+            idPartido = partido.getIdPartido();
+                System.out.println("Torneo: " + partido.getTorneo().getNombre() +" - Estadio: " + partido.getEstadio().getNumeroIdentificador() + " - El ID del partido es : " + partido.getIdPartido()) ;
+            
+            }
+            
+            //Buscar Partido
+            System.out.println("");
+            System.out.println("Se busca y se imprime datos de un Partido");
+            System.out.println(pd.buscarPartido(idPartido).toString());
+            
+            //Desactivar Partido
+            System.out.println("");
+            System.out.println("Se desactiva un Partido y se imprime la lista");
+            pd.desactivarPartido(pd.buscarPartido(idPartido));
+            //Comprobamos si se desactivo
+            listaPartidos = (ArrayList)pd.obtenerPartido(1);
+            for (Partido partido : listaPartidos) {
+            idPartido = partido.getIdPartido();
+                System.out.println("Torneo: " + partido.getTorneo().getNombre() +" Activo: " + partido.isActivo() + " - Estadio: " + partido.getEstadio().getNumeroIdentificador() + " - El ID del partido es : " + partido.getIdPartido()) ;
+            
+            }
+            
+            listaPartidos = (ArrayList)pd.obtenerPartido(0);
+            for (Partido partido : listaPartidos) {
+            idPartido = partido.getIdPartido();
+                System.out.println("Torneo: " + partido.getTorneo().getNombre() +" Activo: " + partido.isActivo() + " - Estadio: " + partido.getEstadio().getNumeroIdentificador() + " - El ID del partido es : " + partido.getIdPartido()) ;
+            
+            }
+            
+            //Activar Partido
+            System.out.println("");
+            System.out.println("Se Activa el mismo Partido y se imprime la lista");
+            pd.activarPartido(pd.buscarPartido(idPartido));
+            //Comprobamos si se Activo
+            listaPartidos = (ArrayList)pd.obtenerPartido(1);
+            for (Partido partido : listaPartidos) {
+            idPartido = partido.getIdPartido();
+                System.out.println("Torneo: " + partido.getTorneo().getNombre() +" Activo: " + partido.isActivo() + " - Estadio: " + partido.getEstadio().getNumeroIdentificador() + " - El ID del partido es : " + partido.getIdPartido()) ;
+            }
+            listaPartidos = (ArrayList)pd.obtenerPartido(0);
+            for (Partido partido : listaPartidos) {
+            idPartido = partido.getIdPartido();
+                System.out.println("Torneo: " + partido.getTorneo().getNombre() +" Activo: " + partido.isActivo() + " - Estadio: " + partido.getEstadio().getNumeroIdentificador() + " - El ID del partido es : " + partido.getIdPartido()) ;
+            
+            }
+            //Borramos un Partido
+            System.out.println("");
+            System.out.println("Se borra un partido y se imprime la lista");
+            pd.borrarPartido(idPartido);
+            //Comprobamos que se haya borrado
+            listaPartidos = (ArrayList)pd.obtenerPartido(1);
+            for (Partido partido : listaPartidos) {
+            idPartido = partido.getIdPartido();
+                System.out.println("Torneo: " + partido.getTorneo().getNombre() +" Activo: " + partido.isActivo() + " - Estadio: " + partido.getEstadio().getNumeroIdentificador() + " - El ID del partido es : " + partido.getIdPartido()) ;
+            
+            }
+            */
+            // Hasta aqui Prueba PartidoData
+            
             
             
             

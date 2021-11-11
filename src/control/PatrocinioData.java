@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import modelo.Conexion;
 import modelo.Jugador;
 import modelo.Patrocinador;
@@ -31,7 +33,7 @@ public class PatrocinioData {
 
     public boolean guardarPatrocinio(Patrocinio patrocinio) {
         boolean guardado = true;
-        String sql = "INSERT INTO `patrocionio`(`IDJugador`, `IDPatrocinador`, `Indumentaria`, `FechaIniContrato`, `FechaFinContrato`, `Activo`) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO `patrocinio`(`IDJugador`, `IDPatrocinador`, `Indumentaria`, `FechaIniContrato`, `FechaFinContrato`, `Activo`) VALUES (?,?,?,?,?,?)";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -59,7 +61,7 @@ public class PatrocinioData {
     public boolean actualizarPatrocinio(Patrocinio patrocinio) {
 
         boolean actualizado = true;
-        String sql = "UPDATE `patrocionio` SET `IDJugador`=?,`IDPatrocinador`=?,`Indumentaria`='?',`FechaIniContrato`='?',`FechaFinContrato`='?',`Activo`=? WHERE IDPatrocinio=?";
+        String sql = "UPDATE `patrocinio` SET `IDJugador`=?,`IDPatrocinador`=?,`Indumentaria`=?,`FechaIniContrato`=?,`FechaFinContrato`=?,`Activo`=? WHERE IDPatrocinio=?";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -103,7 +105,7 @@ public class PatrocinioData {
         return actualizarPatrocinio(patrocinio);
     }
 
-    public boolean activarJugador(Patrocinio patrocinio) {
+    public boolean activarPatrocinio(Patrocinio patrocinio) {
         patrocinio.setActivo(true);
         return actualizarPatrocinio(patrocinio);
     }
@@ -112,7 +114,7 @@ public class PatrocinioData {
         List<Patrocinio> patrocinios = new ArrayList<>();
         Patrocinio patrocinio = null;
 
-        String sql = "SELECT `IDJugador`,`IDPatrocinador`,`Indumentaria`,`FechaIniContrato`,`FechaFinContrato`,`Activo` FROM `patrocionio`";
+        String sql = "SELECT `IDPatrocinio`, `IDJugador`,`IDPatrocinador`,`Indumentaria`,`FechaIniContrato`,`FechaFinContrato`,`Activo` FROM `patrocinio`";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -120,6 +122,7 @@ public class PatrocinioData {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 patrocinio = new Patrocinio();
+                patrocinio.setIdPatrocinio(rs.getInt("IDPatrocinio"));
                 patrocinio.setJugador(jugadorData.buscarJugador(rs.getInt("IDJugador")));
                 patrocinio.setPatrocinador(patrocinadorData.buscarPatrocinador(rs.getInt("IDPatrocinador")));
                 patrocinio.setIndumentaria(rs.getString("Indumentaria"));
@@ -140,7 +143,7 @@ public class PatrocinioData {
         List<Patrocinio> patrocinios = new ArrayList<>();
         Patrocinio patrocinio = null;
 
-        String sql = "SELECT `IDJugador`,`IDPatrocinador`,`Indumentaria`,`FechaIniContrato`,`FechaFinContrato` FROM `patrocionio` WHERE `IDJugador`= " + jugador.getIdJugador();
+        String sql = "SELECT `IDJugador`,`IDPatrocinador`,`Indumentaria`,`FechaIniContrato`,`FechaFinContrato` FROM `patrocinio` WHERE `IDJugador`= " + jugador.getIdJugador();
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -168,7 +171,7 @@ public class PatrocinioData {
         List<Patrocinio> patrocinios = new ArrayList<>();
         Patrocinio patrocinio = null;
 
-        String sql = "SELECT `IDJugador`,`IDPatrocinador`,`Indumentaria`,`FechaIniContrato`,`FechaFinContrato` FROM `patrocionio` WHERE `IDJugador`= " + patrocinador.getIdPatrocinador();
+        String sql = "SELECT `IDJugador`,`IDPatrocinador`,`Indumentaria`,`FechaIniContrato`,`FechaFinContrato` FROM `patrocinio` WHERE `IDPatrocinador`= " + patrocinador.getIdPatrocinador();
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -195,15 +198,18 @@ public class PatrocinioData {
     public Patrocinio buscarPatrocinio(int idPatrocinio) {
         Patrocinio patrocinio = null;
 
-        String sql = "SELECT `IDJugador`,`IDPatrocinador`,`Indumentaria`,`FechaIniContrato`,`FechaFinContrato` FROM `patrocionio` WHERE `IDPatrocinio`=?";
-
+        String sql = "SELECT `IDPatrocinio`, `IDJugador`,`IDPatrocinador`,`Indumentaria`,`FechaIniContrato`,`FechaFinContrato`, `Activo` FROM `patrocinio` WHERE `IDPatrocinio` = ?";
+        
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, idPatrocinio);
+           ps.setInt(1, idPatrocinio);
 
-            ResultSet rs = ps.executeQuery();
+           ResultSet rs = ps.executeQuery();
             if (rs.next()) {
+                
+                
                 patrocinio = new Patrocinio();
+                patrocinio.setIdPatrocinio(rs.getInt("IDPatrocinio"));
                 patrocinio.setJugador(jugadorData.buscarJugador(rs.getInt("IDJugador")));
                 patrocinio.setPatrocinador(patrocinadorData.buscarPatrocinador(rs.getInt("IDPatrocinador")));
                 patrocinio.setIndumentaria(rs.getString("Indumentaria"));
@@ -213,7 +219,7 @@ public class PatrocinioData {
 
             }
         } catch (SQLException ex) {
-            System.out.println("Error al buscar jugador.");
+            System.out.println("Error al buscar patrocinio.");
         }
         return patrocinio;
     }
