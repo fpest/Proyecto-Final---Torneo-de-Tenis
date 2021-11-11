@@ -42,7 +42,7 @@ public class TorneoData {
         return guardado;
     }
     
-    public boolean actualizarTorneo(Torneo torneo) {
+  public boolean actualizarTorneo(Torneo torneo) {
     
         boolean actualizado = true;
         String sql = "UPDATE torneo SET Nombre=?,FechaInicio=?,FechaFinalizacion=?,Activo=? WHERE IDTorneo=?";
@@ -50,8 +50,8 @@ public class TorneoData {
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, torneo.getNombre());
-            ps.setDate(2, Date.valueOf(torneo.getFechaFn()));
-            ps.setDate(3, Date.valueOf(torneo.getFechaIn()));
+            ps.setDate(2, Date.valueOf(torneo.getFechaIn()));
+            ps.setDate(3, Date.valueOf(torneo.getFechaFn()));
             ps.setBoolean(4, torneo.isActivo());
             ps.setInt(5, torneo.getIdTorneo());
             ps.executeUpdate();
@@ -64,7 +64,6 @@ public class TorneoData {
         }
         return actualizado;
     }
-    
     public boolean borrarTorneo(int id) {
      boolean borrado = true;
         String sql = "DELETE FROM torneo WHERE IDTorneo=?";

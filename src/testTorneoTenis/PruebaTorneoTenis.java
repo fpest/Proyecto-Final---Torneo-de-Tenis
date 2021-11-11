@@ -18,6 +18,8 @@ public class PruebaTorneoTenis {
             TorneoData td = new TorneoData(conexion);
             EstadioData ed = new EstadioData(conexion);
             PartidoData pd = new PartidoData(conexion);
+            PatrocinadorData pdd = new PatrocinadorData(conexion);
+            PatrocinioData pcd = new PatrocinioData(conexion);
             /*
             Desde aqui Prueba de Jugador
             //Instancias de jugadores
@@ -129,6 +131,9 @@ public class PruebaTorneoTenis {
             //Hasta aqui Prueba de Jugador
             */
             
+            
+            
+            
             //Desde Aqui Prueba de Torneo
             /*
               //Instancias de Torneos
@@ -160,8 +165,87 @@ public class PruebaTorneoTenis {
             // Hasta aqui Prueba Torneo
             */
        
+            
+            
+            //Desde Aqui Prueba de EstadioData
+            
+            int idEstadio=0;
+            
+            //Instancias de Estadios
+            Estadio e1 = new Estadio(24, "La Punta", "Funes 999",0, 2000,3000,40000,"Cemento",true);  
+            Estadio e2 = new Estadio(25, "Guillermo Vilas", "Londres 999",0, 2000,3000,40000,"Ladrillo",true);
+            Estadio e3 = new Estadio(26, "Roger", "Francia 999",0, 2000,3000,40000,"Cesped",true);
+            Estadio e4 = new Estadio(27, "Agasi", "Londres 999",0, 2000,3000,40000,"Cemento",true);
+            Estadio e5 = new Estadio(28, "Lendl", "Sidney 999",0, 2000,3000,40000,"Ladrillo",true);
+            
+            
+            //Guardar Estadio
+            ed.guardarEstadio(e1); 
+            ed.guardarEstadio(e2); 
+            ed.guardarEstadio(e3); 
+            ed.guardarEstadio(e4); 
+            ed.guardarEstadio(e5);
+            
+            //Obtener lista de estadios y mostrar
+            System.out.println("Mostramos la lista de los Estadios");
+            ArrayList<Estadio> listaEstadios = (ArrayList)ed.obtenerEstadio();
+            for (Estadio estadio : listaEstadios) {
+                System.out.println("Estadio N: " + estadio.getNumeroIdentificador() +" - "+ estadio.getCategoria() + " - Activo: " + estadio.isActivo()  );
+            idEstadio = estadio.getIdEstadio();
+            }
+            
+            //Buscar Estadio
+            System.out.println("");
+            System.out.println("Se busca y se imprime datos de un Estadio");
+            System.out.println(ed.buscarEstadio(idEstadio).toString());
+            
+            //Desactivar Torneo
+            System.out.println("");
+            System.out.println("Se desactiva un Estadio y se imprime la lista");
+            ed.desactivarEstadio(e1);
+            //Comprobamos si se desactivo
+            for (Estadio estadio : listaEstadios) {
+                System.out.println("Estadio N: " + estadio.getNumeroIdentificador() +" - "+ estadio.getCategoria() + " - Activo: " + estadio.isActivo()  );
+            idEstadio = estadio.getIdEstadio();
+            }
+            
+            //Activar Torneo
+            System.out.println("");
+            System.out.println("Se Activa el mismo estadio y se imprime la lista");
+            ed.activarEstadio(e1);
+            //Comprobamos si se Activo
+            for (Estadio estadio : listaEstadios) {
+                System.out.println("Estadio N: " + estadio.getNumeroIdentificador() +" - "+ estadio.getCategoria() + " - Activo: " + estadio.isActivo()  );
+            idEstadio = estadio.getIdEstadio();
+            }
+            System.out.println("");
+            System.out.println("Se imprimen los estadios que estan en Londres");
+            ArrayList<Estadio> listaEstadioLondres = (ArrayList) ed.obtenerEstadio("Londres");
+            for (Estadio estadio : listaEstadioLondres) {
+                System.out.println(estadio.toString());
+            }
+            
+            //Borramos un Estadio
+            System.out.println("");
+            System.out.println("Se borra un estadio y se imprime la lista");
+            ed.borrarEstadio(idEstadio);
+            //Comprobamos que se haya borrado
+            for (Estadio estadio : listaEstadios) {
+                System.out.println("Estadio N: " + estadio.getNumeroIdentificador() +" - "+ estadio.getCategoria() + " - Activo: " + estadio.isActivo()  );
+            idEstadio = estadio.getIdEstadio();
+            }
+            
+            
+            
+            
+            
+            // Hasta aqui Prueba EstadioData
+            
+            
+            
+            
+            
                  
-                 Estadio e1 = new Estadio(24, "La Punta", "Funes 999",1, 2000,3000,40000,"Cemento",true);
                  ed.guardarEstadio(e1);
             
                //  Partido p1 = new Partido(1,188,191,1,LocalDate.of(2021,11,06),"Programado",0,"0","0",true);

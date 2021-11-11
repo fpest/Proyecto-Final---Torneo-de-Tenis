@@ -41,6 +41,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMnTorneo = new javax.swing.JMenuItem();
         jMnPatrocinador = new javax.swing.JMenuItem();
         jMnConfTorneo = new javax.swing.JMenu();
+        jMnPatrocinios = new javax.swing.JMenu();
+        jMnContratos = new javax.swing.JMenuItem();
         jMnResultado = new javax.swing.JMenu();
         jMnRanking = new javax.swing.JMenu();
         jMnPorTorneo = new javax.swing.JMenuItem();
@@ -103,6 +105,18 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
         jMenuBar1.add(jMnConfTorneo);
+
+        jMnPatrocinios.setText("Patrocinios");
+
+        jMnContratos.setText("Contratos");
+        jMnContratos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMnContratosActionPerformed(evt);
+            }
+        });
+        jMnPatrocinios.add(jMnContratos);
+
+        jMenuBar1.add(jMnPatrocinios);
 
         jMnResultado.setText("Resultado");
         jMenuBar1.add(jMnResultado);
@@ -239,6 +253,23 @@ public class MenuPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMnConfTorneoMouseClicked
 
+    private void jMnContratosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnContratosActionPerformed
+              try {
+            Conexion conexion = new Conexion();
+            PatrocinioData patrocinioData = new PatrocinioData(conexion);
+            JugadorData jugadorData = new JugadorData(conexion);
+            PatrocinadorData patrocinadorData = new PatrocinadorData(conexion);
+            escritorio.removeAll();
+            escritorio.repaint();
+            ABMPatrocinio ap = new ABMPatrocinio(patrocinioData, jugadorData, patrocinadorData);
+            ap.setVisible(true);
+            escritorio.add(ap);
+            escritorio.moveToFront(ap);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ABMPatrocinador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMnContratosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -279,10 +310,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMnABMVarios;
     private javax.swing.JMenu jMnConfTorneo;
+    private javax.swing.JMenuItem jMnContratos;
     private javax.swing.JMenuItem jMnEstadio;
     private javax.swing.JMenuItem jMnGlobal;
     private javax.swing.JMenuItem jMnJugador;
     private javax.swing.JMenuItem jMnPatrocinador;
+    private javax.swing.JMenu jMnPatrocinios;
     private javax.swing.JMenuItem jMnPorTorneo;
     private javax.swing.JMenu jMnRanking;
     private javax.swing.JMenu jMnResultado;

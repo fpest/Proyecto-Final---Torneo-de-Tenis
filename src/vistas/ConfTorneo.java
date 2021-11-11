@@ -42,12 +42,7 @@ public class ConfTorneo extends javax.swing.JInternalFrame {
     private ArrayList<Torneo> listaTorneos = new ArrayList<>();
     private ArrayList<Estadio> listaEstadios = new ArrayList<>();
     private ArrayList<Partido> listaPartidos = new ArrayList<>();
-//    private Jugador jugador;
-//    private Jugador jugador1;
-//    private Jugador jugador2;
     private Jugador jugadorGanador;
-//    private Torneo torneo;
-//    private Estadio estadio;
     private Partido partido;
     
     private int idJugador1=0;
@@ -68,8 +63,6 @@ public class ConfTorneo extends javax.swing.JInternalFrame {
 
         partido = new Partido();
         jugadorGanador = new Jugador();
-//        jugador1 = new Jugador();
-//        jugador2 = new Jugador();
         listaJugadores = (ArrayList) jugadorData.obtenerJugador();
 
      

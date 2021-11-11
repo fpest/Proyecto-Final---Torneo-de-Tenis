@@ -270,9 +270,10 @@ public class PartidoData {
 
              
        // String sql = "SELECT `IDJugador1`, `IDJugador2`, `FechaHora` FROM `partido` WHERE `IDEstadio` = " + partido.getEstadio().getIdEstadio() + " and (`FechaHora` BETWEEN \"" + formattedDateTime + "\" and DATE_ADD(\"" + formattedDateTime + "\",INTERVAL 3 HOUR))";
-        String sql = "SELECT `IDTorneo`, `IDEstadio`, `FechaHora` FROM `partido` WHERE (`IDJugador1` = " + partido.getJugador1().getIdJugador() + " or `IDJugador2` = " + partido.getJugador2().getIdJugador() + ") and (`FechaHora` BETWEEN \"" + formattedDateTime + "\" and DATE_ADD(\"" + formattedDateTime + "\",INTERVAL 3 HOUR)) || (DATE_ADD(`FechaHora`,INTERVAL 3 HOUR) BETWEEN \"" + formattedDateTime + "\" and DATE_ADD(\"" + formattedDateTime + "\",INTERVAL 3 HOUR))";
+        String sql = "SELECT `IDTorneo`, `IDEstadio`, `FechaHora` FROM `partido` WHERE (`IDJugador1` = " + partido.getJugador1().getIdJugador() + " or `IDJugador2` = " + partido.getJugador2().getIdJugador() + ") and (`FechaHora` BETWEEN \"" + formattedDateTime + "\" and DATE_ADD(\"" + formattedDateTime + "\",INTERVAL 3 HOUR)) or (DATE_ADD(`FechaHora`,INTERVAL 3 HOUR) BETWEEN \"" + formattedDateTime + "\" and DATE_ADD(\"" + formattedDateTime + "\",INTERVAL 3 HOUR))";
     
-     
+     JOptionPane.showMessageDialog(null,sql); 
+        System.out.println(sql);
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             

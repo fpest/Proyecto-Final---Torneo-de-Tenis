@@ -88,7 +88,7 @@ public class EstadioData {
     
     public boolean borrarEstadio(int idEstadio) {
      boolean borrado = true;
-        String sql = "DELETE FROM `estadio` WHERE idEstadio=?";
+        String sql = "DELETE FROM `estadio` WHERE IDEstadio=?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, idEstadio);
@@ -104,7 +104,7 @@ public class EstadioData {
     
     public boolean desactivarEstadio(Estadio estadio) {
         estadio.setActivo(false);
-        estadio.toString();
+        
         return actualizarEstadio(estadio);
     }
  
