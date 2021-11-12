@@ -42,7 +42,7 @@ public class TorneoData {
         return guardado;
     }
     
-  public boolean actualizarTorneo(Torneo torneo) {
+    public boolean actualizarTorneo(Torneo torneo) {
     
         boolean actualizado = true;
         String sql = "UPDATE torneo SET Nombre=?,FechaInicio=?,FechaFinalizacion=?,Activo=? WHERE IDTorneo=?";

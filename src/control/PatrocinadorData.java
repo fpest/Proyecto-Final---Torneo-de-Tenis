@@ -74,7 +74,7 @@ public class PatrocinadorData {
     
     public boolean borrarPatrocinador(int idPatrocinador) {
      boolean borrado = true;
-        String sql = "DELETE FROM `patrocinador` WHERE idPatrocinador=?";
+        String sql = "DELETE FROM `patrocinador` WHERE IDPatrocinador=?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, idPatrocinador);
@@ -131,7 +131,7 @@ public class PatrocinadorData {
     public Patrocinador buscarPatrocinador(int idPatrocinador) {
         Patrocinador patrocinador = null;
 
-        String sql = "SELECT * FROM patrocinador WHERE idPatrocinador=?";
+        String sql = "SELECT * FROM patrocinador WHERE IDPatrocinador=?";
         
 
         try {

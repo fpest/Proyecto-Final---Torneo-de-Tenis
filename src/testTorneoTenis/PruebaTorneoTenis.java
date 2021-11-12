@@ -214,7 +214,7 @@ public class PruebaTorneoTenis {
                 System.out.println("Estadio N: " + estadio.getNumeroIdentificador() +" - "+ estadio.getCategoria() + " - Activo: " + estadio.isActivo()  );
             }
             
-            //Activar Torneo
+            //Activar Estadio
             System.out.println("");
             System.out.println("Se Activa el mismo estadio y se imprime la lista");
             ed.activarEstadio(ed.buscarEstadio(idEstadio));
