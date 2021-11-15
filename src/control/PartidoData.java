@@ -109,6 +109,35 @@ public class PartidoData {
         return guardado;
     }
 
+    public boolean acautlizarPartidoFechaHora(Partido partido) {
+        String formattedDateTime = partido.getFechaHora().format(formatter);
+        boolean actualizado = true;
+        String sql = "UPDATE `partido` SET `IDTorneo`=?,`IDJugador1`=?,`IDJugador2`=?,`IDEstadio`=?,`FechaHora`=?,`Estado`=?,`Activo`=? WHERE IDPartido=?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, partido.getTorneo().getIdTorneo());
+            ps.setInt(2, partido.getJugador1().getIdJugador());
+            ps.setInt(3, partido.getJugador2().getIdJugador());
+            ps.setInt(4, partido.getEstadio().getIdEstadio());
+            ps.setString(5, formattedDateTime);
+            ps.setString(6, partido.getEstado());
+            ps.setBoolean(7, partido.isActivo());
+            ps.setInt(8, partido.getIdPartido());
+            ps.executeUpdate();
+
+            ps.close();
+        } catch (SQLException ex) {
+            actualizado = false;
+            System.out.println("Error al intentar modificar registro " + ex);
+        }
+        return actualizado;
+        
+        
+        
+        
+    }
+    
     public boolean actualizarPartido(Partido partido) {
         String formattedDateTime = partido.getFechaHora().format(formatter);
         boolean actualizado = true;
@@ -309,7 +338,7 @@ public class PartidoData {
         List<Partido> listaPartidos = new ArrayList<>();
         Partido partido = new Partido();
 
-        String sql = "SELECT est.IDEstadio, est.NumeroIdentificador, ju1.IDJugador, ju1.Apellido, ju1.Nombre, ju2.IDJugador, ju2.Apellido, ju2.Nombre, FechaHora  FROM `partido` pa JOIN `torneo` tor on pa.IDTorneo = tor.IDTorneo JOIN `estadio`est on pa.IDEstadio = est.IdEstadio JOIN `jugador` ju1 on pa.IDJugador1 = ju1.IDJugador JOIN `jugador` ju2 on pa.IDJugador2 = ju2.IDJugador WHERE tor.Nombre = \"" + torneoNombre + "\" and pa.Activo = " + torneoActivo;
+        String sql = "SELECT IDPartido, est.IDEstadio, est.NumeroIdentificador, ju1.IDJugador, ju1.Apellido, ju1.Nombre, ju2.IDJugador, ju2.Apellido, ju2.Nombre, FechaHora  FROM `partido` pa JOIN `torneo` tor on pa.IDTorneo = tor.IDTorneo JOIN `estadio`est on pa.IDEstadio = est.IdEstadio JOIN `jugador` ju1 on pa.IDJugador1 = ju1.IDJugador JOIN `jugador` ju2 on pa.IDJugador2 = ju2.IDJugador WHERE tor.Nombre = \"" + torneoNombre + "\" and pa.Activo = " + torneoActivo;
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -319,6 +348,7 @@ public class PartidoData {
                 Estadio estadio = new Estadio();
 
                 //   estadio = estadioData.buscarEstadio(1);
+                partido.setIdPartido(rs.getInt("IDPartido"));
                 partido.setEstadio(estadioData.buscarEstadio(rs.getInt("est.IDEstadio")));
                 partido.setJugador1(jugadorData.buscarJugador(rs.getInt("ju1.IDJugador")));
                 partido.setJugador2(jugadorData.buscarJugador(rs.getInt("ju2.IDJugador")));

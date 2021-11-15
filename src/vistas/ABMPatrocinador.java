@@ -5,10 +5,10 @@
  */
 package vistas;
 
-import control.JugadorData;
+
 import control.PatrocinadorData;
 import java.util.ArrayList;
-import modelo.Jugador;
+import javax.swing.JOptionPane;
 import modelo.Patrocinador;
 
 /**
@@ -32,9 +32,80 @@ public class ABMPatrocinador extends javax.swing.JInternalFrame {
         initComponents();
         this.patrocinadorData = patrocinadorData;
         
+        listaPatrocinadores = (ArrayList) patrocinadorData.obtenerPatrocinador();
+        limpiarCampos();    
+        llenarListaPatrocinadores(true);
+        desactivarControles();
+        
     }
 
+    public void limpiarCampos(){
+        
+        rbtnActivos.setEnabled(true);
+        rbtnInactivos.setEnabled(true);
+        txtNombre.setText("");
+        chkbActivo.setSelected(false);
+        txtBuscarPatro.setText("");
+        btnAlta.setText("Alta");
+        btnModificaciones.setText("Modificación");
+        btnAlta.setEnabled(true);
+    }
     
+    public void llenarListaPatrocinadores(Boolean activo){
+    
+        
+        if (txtBuscarPatro.getText() != "") {
+            listaPatrocinadores = (ArrayList) patrocinadorData.obtenerPatrocinador(txtBuscarPatro.getText());
+        } else {
+            listaPatrocinadores = (ArrayList) patrocinadorData.obtenerPatrocinador();
+        }
+
+        lstPatrocinadores.removeAll();
+
+        int largoLista = listaPatrocinadores.size();
+
+        Patrocinador[] marcaNombre = new Patrocinador[largoLista];
+        int i = 0;
+
+        for (Patrocinador patrocinador : listaPatrocinadores) {
+            if (patrocinador.isActivo() == activo) {
+                marcaNombre[i] = patrocinador;
+                i++;
+            }
+        }
+
+        lstPatrocinadores.setModel(new javax.swing.AbstractListModel<Patrocinador>(){
+            public int getSize() {
+                return listaPatrocinadores.size();
+            }
+
+            public Patrocinador getElementAt(int i) {
+                return marcaNombre[i];
+            }
+        });
+    }
+    
+    
+    public void desactivarControles(){
+         btnBaja.setEnabled(false);
+        btnModificaciones.setEnabled(false);
+        txtNombre.setEnabled(false);
+        chkbActivo.setEnabled(false);
+    }
+    
+    public void activarControles(){
+        btnBaja.setEnabled(true);
+        btnModificaciones.setEnabled(true);
+        txtNombre.setEnabled(true);
+        chkbActivo.setEnabled(true);
+    }
+    
+    private void llenarCampos(Patrocinador patrocinador) {
+        
+        txtNombre.setText(patrocinador.getMarca());
+        chkbActivo.setSelected(patrocinador.isActivo());
+        
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -45,8 +116,22 @@ public class ABMPatrocinador extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Activos = new javax.swing.ButtonGroup();
         jLabel2 = new javax.swing.JLabel();
         jbtnSalir = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        chkbActivo = new javax.swing.JCheckBox();
+        txtBuscarPatro = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lstPatrocinadores = new javax.swing.JList<>();
+        rbtnActivos = new javax.swing.JRadioButton();
+        rbtnInactivos = new javax.swing.JRadioButton();
+        btnAlta = new javax.swing.JButton();
+        btnBaja = new javax.swing.JButton();
+        btnModificaciones = new javax.swing.JButton();
+        btnLimpiarCampos = new javax.swing.JButton();
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("Altas/Bajas/Modificaciones Patrocinadores");
@@ -58,27 +143,147 @@ public class ABMPatrocinador extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel1.setText("Nombre:");
+
+        chkbActivo.setText("Activo");
+
+        txtBuscarPatro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarPatroKeyReleased(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel3.setText("Buscar Patrocinador");
+
+        lstPatrocinadores.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstPatrocinadoresValueChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(lstPatrocinadores);
+
+        Activos.add(rbtnActivos);
+        rbtnActivos.setSelected(true);
+        rbtnActivos.setText("Activos");
+        rbtnActivos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnActivosActionPerformed(evt);
+            }
+        });
+
+        Activos.add(rbtnInactivos);
+        rbtnInactivos.setText("Inactivos");
+        rbtnInactivos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnInactivosActionPerformed(evt);
+            }
+        });
+
+        btnAlta.setText("Alta");
+        btnAlta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAltaActionPerformed(evt);
+            }
+        });
+
+        btnBaja.setText("Baja");
+        btnBaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBajaActionPerformed(evt);
+            }
+        });
+
+        btnModificaciones.setText("Modificaciones");
+        btnModificaciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificacionesActionPerformed(evt);
+            }
+        });
+
+        btnLimpiarCampos.setText("Limpiar Campos");
+        btnLimpiarCampos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarCamposActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(53, Short.MAX_VALUE)
+                .addGap(66, 66, 66)
+                .addComponent(jLabel2)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnAlta)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBaja)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnModificaciones)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnLimpiarCampos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbtnSalir)
+                .addGap(18, 18, 18))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(46, 46, 46))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jbtnSalir)
-                        .addContainerGap())))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(chkbActivo))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(rbtnActivos)
+                            .addGap(49, 49, 49)
+                            .addComponent(rbtnInactivos)
+                            .addContainerGap())
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtBuscarPatro, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(90, 90, 90)))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 216, Short.MAX_VALUE)
-                .addComponent(jbtnSalir)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtBuscarPatro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(7, 7, 7)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(41, 41, 41)
+                        .addComponent(chkbActivo)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rbtnActivos)
+                    .addComponent(rbtnInactivos))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbtnSalir)
+                    .addComponent(btnAlta)
+                    .addComponent(btnBaja)
+                    .addComponent(btnModificaciones)
+                    .addComponent(btnLimpiarCampos))
                 .addContainerGap())
         );
 
@@ -89,9 +294,169 @@ public class ABMPatrocinador extends javax.swing.JInternalFrame {
         dispose();
     }//GEN-LAST:event_jbtnSalirActionPerformed
 
+    private void lstPatrocinadoresValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstPatrocinadoresValueChanged
+        try{
+        if (!lstPatrocinadores.isSelectionEmpty()) {
+            txtBuscarPatro.setText(lstPatrocinadores.getSelectedValue().toString());
+            desactivarControles();
+            btnBaja.setEnabled(true);
+            btnModificaciones.setEnabled(true);
+            btnAlta.setEnabled(false);
+            btnAlta.setText("Alta");
+            btnModificaciones.setText("Modificación");
+            llenarCampos(lstPatrocinadores.getSelectedValue());
+        }
+         }catch(NullPointerException ex){
+           JOptionPane.showMessageDialog(null, "Debe seleccionar un item de la lista.");
+         }
+    }//GEN-LAST:event_lstPatrocinadoresValueChanged
+
+    private void btnLimpiarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarCamposActionPerformed
+        limpiarCampos();
+        desactivarControles();
+        btnAlta.setEnabled(true);
+    }//GEN-LAST:event_btnLimpiarCamposActionPerformed
+
+    private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
+        patrocinador = armarPatrocinador();
+        patrocinador.setActivo(false);
+        patrocinadorData.desactivarPatrocinador(patrocinador);
+
+        limpiarCampos();
+        desactivarControles();
+        llenarListaPatrocinadores(true);
+        JOptionPane.showMessageDialog(null, " Patrocinador Dado de Baja");
+    }//GEN-LAST:event_btnBajaActionPerformed
+
+    private void btnModificacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificacionesActionPerformed
+        if (btnModificaciones.getText() == "Modificación") {
+            activarControles();
+            rbtnActivos.setEnabled(false);
+            rbtnInactivos.setEnabled(false);
+        
+            btnModificaciones.setText("Guardar Cambios");
+        } else {
+            if (validarCampos()) {
+                patrocinador = armarPatrocinador();
+                
+                if (patrocinadorData.actualizarPatrocinador(patrocinador)) {
+                    limpiarCampos();
+                    desactivarControles();
+                    btnAlta.setEnabled(true);
+                    btnAlta.setText("Alta");
+                    rbtnActivos.setSelected(true);
+                    llenarListaPatrocinadores(true);
+                    JOptionPane.showMessageDialog(null, "Datos del Patrocinador Modificados.");
+                } else {
+                    txtNombre.requestFocus();
+                }
+            }
+        }
+    }//GEN-LAST:event_btnModificacionesActionPerformed
+
+    private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
+        if (btnAlta.getText() == "Alta") {
+            limpiarCampos();
+            activarControles();
+            llenarListaPatrocinadores(true);
+            btnBaja.setEnabled(false);
+            btnModificaciones.setEnabled(false);
+            chkbActivo.setSelected(true);
+            btnAlta.setText("Guardar");
+            txtNombre.requestFocus();
+        } else {
+            //Archivar
+            if (validarCampos()) {
+                btnAlta.setText("Alta");
+
+        String nombre = txtNombre.getText();
+        boolean activo = chkbActivo.isSelected();
+        patrocinador = new Patrocinador(nombre, activo);
+      
+               
+                if (patrocinadorData.guardarPatrocinador(patrocinador)) {
+                    limpiarCampos();
+                    desactivarControles();
+                    llenarListaPatrocinadores(true);
+                    JOptionPane.showMessageDialog(null, " Patrocinador Registrado");
+                } else {
+                    txtNombre.requestFocus();
+                }
+            }
+        }
+    }//GEN-LAST:event_btnAltaActionPerformed
+
+    private void txtBuscarPatroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarPatroKeyReleased
+        if (txtBuscarPatro.getText().isEmpty()){
+        desactivarControles();
+        btnAlta.setEnabled(true);
+        
+        
+        }
+        llenarListaPatrocinadores(rbtnActivos.isSelected());
+    }//GEN-LAST:event_txtBuscarPatroKeyReleased
+
+    private void rbtnActivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnActivosActionPerformed
+          limpiarCampos();
+        listaPatrocinadores = (ArrayList) patrocinadorData.obtenerPatrocinador();
+        if (rbtnActivos.isSelected()) {
+            llenarListaPatrocinadores(true);
+        } else {
+            llenarListaPatrocinadores(false);
+        }
+    }//GEN-LAST:event_rbtnActivosActionPerformed
+
+    private void rbtnInactivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnInactivosActionPerformed
+        limpiarCampos();
+        listaPatrocinadores = (ArrayList) patrocinadorData.obtenerPatrocinador();
+        if (rbtnActivos.isSelected()) {
+            llenarListaPatrocinadores(true);
+        } else {
+            llenarListaPatrocinadores(false);
+        }
+    }//GEN-LAST:event_rbtnInactivosActionPerformed
+
+    
+    
+    private Patrocinador armarPatrocinador(){
+        int idPatrocinador = lstPatrocinadores.getSelectedValue().getIdPatrocinador();
+        String nombre = txtNombre.getText();
+        boolean activo = chkbActivo.isSelected();
+        patrocinador = new Patrocinador(idPatrocinador,nombre,activo);
+      
+    
+    return patrocinador;
+    
+    }
+    
+    private boolean validarCampos() {
+        boolean validado = true;
+       
+        if (txtNombre.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Todos los Campos deben estar llenos.");
+            validado = false;
+        }
+        return validado;
+    }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup Activos;
+    private javax.swing.JButton btnAlta;
+    private javax.swing.JButton btnBaja;
+    private javax.swing.JButton btnLimpiarCampos;
+    private javax.swing.JButton btnModificaciones;
+    private javax.swing.JCheckBox chkbActivo;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbtnSalir;
+    private javax.swing.JList<Patrocinador> lstPatrocinadores;
+    private javax.swing.JRadioButton rbtnActivos;
+    private javax.swing.JRadioButton rbtnInactivos;
+    private javax.swing.JTextField txtBuscarPatro;
+    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }

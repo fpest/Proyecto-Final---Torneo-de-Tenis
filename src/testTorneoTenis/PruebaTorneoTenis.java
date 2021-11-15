@@ -26,7 +26,7 @@ public class PruebaTorneoTenis {
             
             
             //Desde aqui Prueba de Jugador
-            /*
+            
             //Instancias de jugadores
             int idJug=0;
        
@@ -132,14 +132,14 @@ public class PruebaTorneoTenis {
                 System.out.println("ID : " + jugadores.getIdJugador() + " - " + jugadores.getApellido() +" - DNI:"+ jugadores.getDni());
             }
             System.out.println("");
-            */
+            
             //Hasta aqui Prueba de Jugador
             
             
             
             
             //Desde Aqui Prueba de Torneo
-            /*
+            
             //Instancias de Torneos
             Torneo t1 = new Torneo("Brasil Open", LocalDate.of(2021, 11, 1), LocalDate.of(2021, 11, 30), true);
             Torneo t2 = new Torneo("Indian Wells", LocalDate.of(2021, 10, 7), LocalDate.of(2021, 10, 17), true);
@@ -151,11 +151,11 @@ public class PruebaTorneoTenis {
             //Guardar Torneo
             td.guardarTorneo(t1); td.guardarTorneo(t2); td.guardarTorneo(t3); td.guardarTorneo(t4); td.guardarTorneo(t5);
             //Buscar Torneo
-            System.out.println(td.buscarTorneo(3).toString());
+//            System.out.println(td.buscarTorneo(3).toString());
             //Desactivar Torneo
-            td.desactivarTorneo(td.buscarTorneo(3));
+//            td.desactivarTorneo(td.buscarTorneo(3));
             //Activar Torneo
-            td.activarTorneo(td.buscarTorneo(2));
+//            td.activarTorneo(td.buscarTorneo(2));
             //Obtener lista de torneos y mostrar
             ArrayList<Torneo> listaTorneos = (ArrayList)td.obtenerTodosLosTorneos();
             for (Torneo torneos : listaTorneos) {
@@ -166,13 +166,13 @@ public class PruebaTorneoTenis {
             for (Torneo torneos : listaTorneosRoma) {
                 System.out.println(torneos.toString());
             }
-            */
+            
             // Hasta aqui Prueba Torneo
        
             
             
             //Desde Aqui Prueba de EstadioData
-            /*
+            
             int idEstadio=0;
             
             //Instancias de Estadios
@@ -239,12 +239,12 @@ public class PruebaTorneoTenis {
             for (Estadio estadio : listaEstadios) {
                 System.out.println("Estadio N: " + estadio.getNumeroIdentificador() +" - "+ estadio.getCategoria() + " - Activo: " + estadio.isActivo()  );
             }
-            */
+            
             // Hasta aqui Prueba EstadioData
             
             
             //Desde Aqui Prueba de PatrocinadorData
-            /*
+            
             int idPatrocinador=0;
             
             //Instancias de Patrocinadores
@@ -307,20 +307,22 @@ public class PruebaTorneoTenis {
                 System.out.println("Marca: " + patrocinador.getMarca() +" - Activo: " + patrocinador.isActivo() + " - El ID del patrocinador es : " + patrocinador.getIdPatrocinador()) ;
             
             }
-            */
+            
             // Hasta aqui Prueba PatrocinadorData
             
             //Desde Aqui Prueba de PatrocinioData
-            /*
+            
             Patrocinador pt1=null;
             Jugador jp1=null;
             
-            ArrayList<Patrocinador> listaPatrocinadores = (ArrayList)pdd.obtenerPatrocinador();
+            //ArrayList<Patrocinador> 
+                    listaPatrocinadores = (ArrayList)pdd.obtenerPatrocinador();
             for (Patrocinador patrocinador : listaPatrocinadores) {
             pt1 = patrocinador;
             }
             
-            ArrayList<Jugador> listaJugadores = (ArrayList)jd.obtenerJugador();
+            //ArrayList<Jugador> 
+                    listaJugadores = (ArrayList)jd.obtenerJugador();
             for (Jugador jugador : listaJugadores) {
             jp1 = jugador;
             }
@@ -383,23 +385,25 @@ public class PruebaTorneoTenis {
                 System.out.println("indumentaria: " + patrocinio.getIndumentaria() +" - Activo: " + patrocinio.isActivo() + " - El ID del patrocinio es : " + patrocinio.getIdPatrocinio()) ;
             
             }
-            */
+            
             // Hasta aqui Prueba PatrocinadorData
             
             
             //Desde Aqui Prueba de PartidoData
-            /*            
+                        
             Torneo tpar1=null;
             Jugador[] jpar=new Jugador[10];
             Estadio epar1=null;
             
             
-            ArrayList<Torneo> listaTorneos = (ArrayList)td.obtenerTodosLosTorneos();
+            //ArrayList<Torneo> 
+                    listaTorneos = (ArrayList)td.obtenerTodosLosTorneos();
             for (Torneo torneo : listaTorneos) {
             tpar1 = torneo;
             }
             
-            ArrayList<Jugador> listaJugadores = (ArrayList)jd.obtenerJugador();
+            //ArrayList<Jugador> 
+                    listaJugadores = (ArrayList)jd.obtenerJugador();
             int i=0;
             for (Jugador jugador : listaJugadores) {
             
@@ -407,7 +411,8 @@ public class PruebaTorneoTenis {
             i++;
             }
             
-            ArrayList<Estadio> listaEstadios = (ArrayList)ed.obtenerEstadio();
+            //ArrayList<Estadio> 
+                    listaEstadios = (ArrayList)ed.obtenerEstadio();
             for (Estadio estadio : listaEstadios) {
             epar1 = estadio;
             }
@@ -483,7 +488,7 @@ public class PruebaTorneoTenis {
                 System.out.println("Torneo: " + partido.getTorneo().getNombre() +" Activo: " + partido.isActivo() + " - Estadio: " + partido.getEstadio().getNumeroIdentificador() + " - El ID del partido es : " + partido.getIdPartido()) ;
             
             }
-            */
+            
             // Hasta aqui Prueba PartidoData
             
             

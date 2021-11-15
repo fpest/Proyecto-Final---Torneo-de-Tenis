@@ -1,14 +1,17 @@
 package control;
 
+import static control.PartidoData.formatter;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.swing.JOptionPane;
 import modelo.Conexion;
 import modelo.Jugador;
 import modelo.Patrocinador;
@@ -31,6 +34,7 @@ public class PatrocinioData {
         }
     }
 
+    
     public boolean guardarPatrocinio(Patrocinio patrocinio) {
         boolean guardado = true;
         String sql = "INSERT INTO `patrocinio`(`IDJugador`, `IDPatrocinador`, `Indumentaria`, `FechaIniContrato`, `FechaFinContrato`, `Activo`) VALUES (?,?,?,?,?,?)";
@@ -101,7 +105,7 @@ public class PatrocinioData {
 
     public boolean desactivarPatrocinio(Patrocinio patrocinio) {
         patrocinio.setActivo(false);
-        patrocinio.toString();
+//        patrocinio.toString();
         return actualizarPatrocinio(patrocinio);
     }
 
@@ -142,9 +146,10 @@ public class PatrocinioData {
     public List<Patrocinio> obtenerPatrocinioJugador(Jugador jugador) {
         List<Patrocinio> patrocinios = new ArrayList<>();
         Patrocinio patrocinio = null;
+      
+        String sql = "SELECT `IDJugador`,`IDPatrocinador`,`Indumentaria`,`FechaIniContrato`,`FechaFinContrato`, `Activo` FROM `patrocinio` WHERE `IDJugador`= " + jugador.getIdJugador();
 
-        String sql = "SELECT `IDJugador`,`IDPatrocinador`,`Indumentaria`,`FechaIniContrato`,`FechaFinContrato` FROM `patrocinio` WHERE `IDJugador`= " + jugador.getIdJugador();
-
+     
         try {
             PreparedStatement ps = con.prepareStatement(sql);
 
@@ -204,6 +209,48 @@ public class PatrocinioData {
             PreparedStatement ps = con.prepareStatement(sql);
            ps.setInt(1, idPatrocinio);
 
+           ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                
+                
+                patrocinio = new Patrocinio();
+                patrocinio.setIdPatrocinio(rs.getInt("IDPatrocinio"));
+                patrocinio.setJugador(jugadorData.buscarJugador(rs.getInt("IDJugador")));
+                patrocinio.setPatrocinador(patrocinadorData.buscarPatrocinador(rs.getInt("IDPatrocinador")));
+                patrocinio.setIndumentaria(rs.getString("Indumentaria"));
+                patrocinio.setFechaContraroIn(rs.getDate("FechaIniContrato").toLocalDate());
+                patrocinio.setFechaContratoFn(rs.getDate("FechaFinContrato").toLocalDate());
+                patrocinio.setActivo(rs.getBoolean("Activo"));
+
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al buscar patrocinio.");
+        }
+        return patrocinio;
+    }
+    
+    public Patrocinio buscarPatrocinioJugadorContrato(Jugador jugador, String fechaInicioContrato, String fechaFinContrato, String indumentaria, int activo) {
+        
+        Patrocinio patrocinio = null;
+
+        String sql = "SELECT `IDPatrocinio`, `IDJugador`,`IDPatrocinador`,`Indumentaria`,`FechaIniContrato`,`FechaFinContrato`, `Activo` "
+                + "FROM `patrocinio` "
+                + "WHERE `IDJugador` = " + jugador.getIdJugador() + "  and `FechaIniContrato` = '" + fechaInicioContrato + "' and `FechaFinContrato` = '" + fechaFinContrato + "' and `Indumentaria` = '" + indumentaria + "' and `Activo`= " + activo + " ";
+                  
+      
+//          JOptionPane.showMessageDialog(null, jugador.getIdJugador() + " " + fechaInicioContrato  + " " + fechaFinContrato  + " " + indumentaria  + " " + activo);
+          
+          
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+//            ps.setInt(1, jugador.getIdJugador());
+//            ps.setString(2, fechaInicioContrato);
+//            ps.setString(3, fechaFinContrato);
+//            ps.setString(4, indumentaria);
+//            ps.setInt(5, activo);
+
+   
+            
            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 
