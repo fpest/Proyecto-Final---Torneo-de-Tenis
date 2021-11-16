@@ -15,14 +15,18 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import static java.time.temporal.TemporalQueries.zone;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.Conexion;
 import modelo.Estadio;
+import modelo.Jugador;
 import modelo.Partido;
+import modelo.Patrocinio;
 import modelo.Torneo;
 
 public class PartidoData {
@@ -338,8 +342,9 @@ public class PartidoData {
         List<Partido> listaPartidos = new ArrayList<>();
         Partido partido = new Partido();
 
-        String sql = "SELECT IDPartido, est.IDEstadio, est.NumeroIdentificador, ju1.IDJugador, ju1.Apellido, ju1.Nombre, ju2.IDJugador, ju2.Apellido, ju2.Nombre, FechaHora  FROM `partido` pa JOIN `torneo` tor on pa.IDTorneo = tor.IDTorneo JOIN `estadio`est on pa.IDEstadio = est.IdEstadio JOIN `jugador` ju1 on pa.IDJugador1 = ju1.IDJugador JOIN `jugador` ju2 on pa.IDJugador2 = ju2.IDJugador WHERE tor.Nombre = \"" + torneoNombre + "\" and pa.Activo = " + torneoActivo;
-
+        //String sql = "SELECT IDPartido, est.IDEstadio, est.NumeroIdentificador, ju1.IDJugador, ju1.Apellido, ju1.Nombre, ju2.IDJugador, ju2.Apellido, ju2.Nombre, FechaHora  FROM `partido` pa JOIN `torneo` tor on pa.IDTorneo = tor.IDTorneo JOIN `estadio`est on pa.IDEstadio = est.IdEstadio JOIN `jugador` ju1 on pa.IDJugador1 = ju1.IDJugador JOIN `jugador` ju2 on pa.IDJugador2 = ju2.IDJugador WHERE tor.Nombre = \"" + torneoNombre + "\" and pa.Activo = " + torneoActivo;
+        String sql = "SELECT IDPartido, est.IDEstadio, est.NumeroIdentificador, ju1.IDJugador, ju1.Apellido, ju1.Nombre, ju2.IDJugador, ju2.Apellido, ju2.Nombre, FechaHora, jug.IDJugador, jug.Apellido, jug.Nombre, Resultado, InstanciaTorneo  FROM `partido` pa JOIN `torneo` tor on pa.IDTorneo = tor.IDTorneo JOIN `estadio`est on pa.IDEstadio = est.IdEstadio JOIN `jugador` ju1 on pa.IDJugador1 = ju1.IDJugador JOIN `jugador` ju2 on pa.IDJugador2 = ju2.IDJugador LEFT JOIN `jugador` jug on pa.IDJugadorGanador = jug.IDJugador WHERE tor.Nombre = \"" + torneoNombre + "\" and pa.Activo = " + torneoActivo;
+      
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -353,7 +358,10 @@ public class PartidoData {
                 partido.setJugador1(jugadorData.buscarJugador(rs.getInt("ju1.IDJugador")));
                 partido.setJugador2(jugadorData.buscarJugador(rs.getInt("ju2.IDJugador")));
                 partido.setFechaHora(deMysqlALocalDateTime(rs.getObject("FechaHora").toString()));
-
+                partido.setJugadorGanador(jugadorData.buscarJugador(rs.getInt("jug.IDJugador")));
+                partido.setResultado(rs.getString("Resultado"));
+                partido.setInstanciaTorneo(rs.getString("InstanciaTorneo"));
+                
                 listaPartidos.add(partido);
             }
             ps.close();
@@ -394,5 +402,53 @@ public class PartidoData {
         }
         return partido;
     }
+    
+    public List<Partido> obtenerPartidoJugadorGanador(Torneo torneo){
+        List<Partido> listaPartidos = new ArrayList<>();
+        Partido partido = new Partido();
 
-}
+        String sql = "SELECT DISTINCT `IDJugadorGanador`FROM `partido`pa JOIN `jugador` ju on ju.IDJugador = pa.IDJugadorGanador Where `IDTorneo` = ?";
+      
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, torneo.getIdTorneo());
+            
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                partido = new Partido();
+               
+                //   estadio = estadioData.buscarEstadio(1);
+                partido.setJugadorGanador(jugadorData.buscarJugador(rs.getInt("IDJugadorGanador")));
+                
+                listaPartidos.add(partido);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            System.out.println("Error al buscar los registros ");
+        }
+        return listaPartidos;
+    }
+    
+    public int cantidadPartidosGanadosJugador(Jugador jugador){
+           Partido partido=null;
+        int cantidadPartidosGanados=0;
+        String sql = "SELECT COUNT(`IDPartido`) FROM `partido` WHERE IDJugadorGanador = ? and Activo = 1";
+ 
+
+try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, jugador.getIdJugador());
+            
+           ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+              cantidadPartidosGanados = rs.getInt("COUNT(`IDPartido`)");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al buscar partido.");
+        }
+        return cantidadPartidosGanados;
+    }
+    }
+    
+
+

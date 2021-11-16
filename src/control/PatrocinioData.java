@@ -271,4 +271,30 @@ public class PatrocinioData {
         return patrocinio;
     }
 
-}
+    
+    //SELECT COUNT(`IDPatrocinio`) FROM `patrocinio` pa join `jugador` ju on ju.IDJugador = pa.IDJugador WHERE pa.IDJugador = 204 and ju.Activo= 1 and pa.Activo = 1 and (now()>`FechaIniContrato` AND now()<`FechaFinContrato`);
+    
+    public int cantidadPatrociniosActivos(Jugador jugador){
+        Patrocinio patrocinio=null;
+        int cantidadPatrociniosActivos=0;
+        String sql = "SELECT COUNT(`IDPatrocinio`) FROM `patrocinio` pa join `jugador` ju on ju.IDJugador = pa.IDJugador WHERE pa.IDJugador = ? and ju.Activo= 1 and pa.Activo = 1 and (now()>`FechaIniContrato` AND now()<`FechaFinContrato`)";
+//          JOptionPane.showMessageDialog(null, jugador.getIdJugador() + " " + fechaInicioContrato  + " " + fechaFinContrato  + " " + indumentaria  + " " + activo);
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, jugador.getIdJugador());
+            
+           ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+              cantidadPatrociniosActivos = rs.getInt("COUNT(`IDPatrocinio`)");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al buscar patrocinio.");
+        }
+        return cantidadPatrociniosActivos;
+    }
+    
+    
+    
+    }
+    
+

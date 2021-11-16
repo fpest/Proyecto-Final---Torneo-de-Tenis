@@ -150,6 +150,7 @@ public class ABMPatrocinio extends javax.swing.JInternalFrame {
         rbInactivos = new javax.swing.JRadioButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        lblPatrociniosActivos = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -242,6 +243,8 @@ public class ABMPatrocinio extends javax.swing.JInternalFrame {
 
         jLabel8.setText("* clickear sobre la fila para activar contrato.");
 
+        lblPatrociniosActivos.setText("Patrocinios:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -278,10 +281,15 @@ public class ABMPatrocinio extends javax.swing.JInternalFrame {
                                         .addComponent(jLabel3)
                                         .addGap(18, 18, 18)
                                         .addComponent(cbPatrocinador, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(cbIndumentaria, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel4)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(cbIndumentaria, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(65, 65, 65)
+                                        .addComponent(lblPatrociniosActivos))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -302,7 +310,8 @@ public class ABMPatrocinio extends javax.swing.JInternalFrame {
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(cbJugador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbJugador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPatrociniosActivos))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbPatrocinador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -341,6 +350,11 @@ public class ABMPatrocinio extends javax.swing.JInternalFrame {
     private void cbJugadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbJugadorActionPerformed
 
         if (rbActivos.isSelected()) {
+         
+//            int cantidadPatrociniosActivos = 0;
+//            cantidadPatrociniosActivos = (patrocinioData.cantidadPatrociniosActivos((Jugador) cbJugador.getSelectedItem()));
+//            String cantidad = cantidadPatrociniosActivos+"";
+//         lblPatrociniosActivos.setText(cantidad);
             llenarTablaPatrocinios(true);
         } else {
             llenarTablaPatrocinios(false);
@@ -482,6 +496,7 @@ public class ABMPatrocinio extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTable1;
     private com.toedter.calendar.JDateChooser jdcFinContrato;
     private com.toedter.calendar.JDateChooser jdcInicioContrato;
+    private javax.swing.JLabel lblPatrociniosActivos;
     private javax.swing.JRadioButton rbActivos;
     private javax.swing.JRadioButton rbInactivos;
     private javax.swing.JTable tblPatrocinio;

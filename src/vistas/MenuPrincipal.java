@@ -45,8 +45,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMnContratos = new javax.swing.JMenuItem();
         jMnResultado = new javax.swing.JMenu();
         jMnRanking = new javax.swing.JMenu();
-        jMnPorTorneo = new javax.swing.JMenuItem();
-        jMnGlobal = new javax.swing.JMenuItem();
         jMnSalir = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -55,11 +53,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 733, Short.MAX_VALUE)
+            .addGap(0, 848, Short.MAX_VALUE)
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 538, Short.MAX_VALUE)
+            .addGap(0, 579, Short.MAX_VALUE)
         );
 
         jMnABMVarios.setText("ABM Varios");
@@ -119,16 +117,19 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMnPatrocinios);
 
         jMnResultado.setText("Resultado");
+        jMnResultado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMnResultadoMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMnResultado);
 
         jMnRanking.setText("Ranking");
-
-        jMnPorTorneo.setText("x Torneo");
-        jMnRanking.add(jMnPorTorneo);
-
-        jMnGlobal.setText("Global");
-        jMnRanking.add(jMnGlobal);
-
+        jMnRanking.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMnRankingMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMnRanking);
 
         jMnSalir.setText("Salir");
@@ -150,15 +151,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(escritorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(escritorio)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(escritorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(escritorio)
         );
 
         pack();
@@ -225,14 +222,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMnPatrocinadorActionPerformed
 
-    private void jMnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnSalirActionPerformed
-       
-    }//GEN-LAST:event_jMnSalirActionPerformed
-
-    private void jMnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMnSalirMouseClicked
-         System.exit(0);
-    }//GEN-LAST:event_jMnSalirMouseClicked
-
     private void jMnConfTorneoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMnConfTorneoMouseClicked
            try {
             Conexion conexion = new Conexion();
@@ -269,6 +258,64 @@ public class MenuPrincipal extends javax.swing.JFrame {
             Logger.getLogger(ABMPatrocinador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMnContratosActionPerformed
+
+    private void jMnResultadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMnResultadoMouseClicked
+                   try {
+            Conexion conexion = new Conexion();
+            TorneoData torneoData = new TorneoData(conexion);
+            PartidoData partidoData = new PartidoData(conexion);
+            EstadioData estadioData = new EstadioData(conexion);
+            JugadorData jugadorData = new JugadorData(conexion);
+            
+            escritorio.removeAll();
+            escritorio.repaint();
+            Resultados res = new Resultados(torneoData, partidoData, estadioData, jugadorData);
+            res.setVisible(true);
+            escritorio.add(res);
+            escritorio.moveToFront(res);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Resultados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+        
+    }//GEN-LAST:event_jMnResultadoMouseClicked
+
+    private void jMnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnSalirActionPerformed
+
+    }//GEN-LAST:event_jMnSalirActionPerformed
+
+    private void jMnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMnSalirMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_jMnSalirMouseClicked
+
+    private void jMnRankingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMnRankingMouseClicked
+
+                   try {
+            Conexion conexion = new Conexion();
+            TorneoData torneoData = new TorneoData(conexion);
+            PartidoData partidoData = new PartidoData(conexion);
+           // EstadioData estadioData = new EstadioData(conexion);
+            JugadorData jugadorData = new JugadorData(conexion);
+            PatrocinioData patrocinioData = new PatrocinioData(conexion);
+            
+            escritorio.removeAll();
+            escritorio.repaint();
+            Ranking res = new Ranking(torneoData, partidoData, patrocinioData, jugadorData);
+            res.setVisible(true);
+            escritorio.add(res);
+            escritorio.moveToFront(res);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Resultados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+
+        
+
+
+
+    }//GEN-LAST:event_jMnRankingMouseClicked
 
     /**
      * @param args the command line arguments
@@ -312,11 +359,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMnConfTorneo;
     private javax.swing.JMenuItem jMnContratos;
     private javax.swing.JMenuItem jMnEstadio;
-    private javax.swing.JMenuItem jMnGlobal;
     private javax.swing.JMenuItem jMnJugador;
     private javax.swing.JMenuItem jMnPatrocinador;
     private javax.swing.JMenu jMnPatrocinios;
-    private javax.swing.JMenuItem jMnPorTorneo;
     private javax.swing.JMenu jMnRanking;
     private javax.swing.JMenu jMnResultado;
     private javax.swing.JMenu jMnSalir;
