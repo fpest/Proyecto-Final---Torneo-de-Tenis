@@ -484,7 +484,7 @@ public class ABMEstadio extends javax.swing.JInternalFrame {
         } else {
             //Archivar
             if (validarCampos()) {
-                btnAlta.setText("Alta");
+                
 
         
         int numeroIdentificador = Integer.valueOf(txtNumIdentif.getText());
@@ -503,8 +503,10 @@ public class ABMEstadio extends javax.swing.JInternalFrame {
                     limpiarCampos();
                     desactivarControles();
                     llenarListaEstadios(true);
+                    btnAlta.setText("Alta");
                     JOptionPane.showMessageDialog(null, " Estadio Registrado");
                 } else {
+                    JOptionPane.showMessageDialog(null, "No se pudo cargar Estadio.");
                     txtNumIdentif.requestFocus();
                 }
             }
