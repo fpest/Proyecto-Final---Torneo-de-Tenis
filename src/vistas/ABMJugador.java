@@ -226,11 +226,21 @@ public class ABMJugador extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Buscar Jugador");
 
+        txtNombre.setNextFocusableComponent(txtApellido);
+
+        txtApellido.setNextFocusableComponent(txtDni);
+
+        txtDni.setNextFocusableComponent(txtAltura);
+
         jLabel3.setText("Nombre:");
 
         jLabel4.setText("Apellido:");
 
         jLabel5.setText("DNI:");
+
+        txtAltura.setNextFocusableComponent(txtPeso);
+
+        txtPeso.setNextFocusableComponent(cbEstilo);
 
         cbEstilo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Agresivo", "Voleador", "De Toda la Cancha" }));
 

@@ -45,6 +45,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMnContratos = new javax.swing.JMenuItem();
         jMnResultado = new javax.swing.JMenu();
         jMnRanking = new javax.swing.JMenu();
+        jMnInformes = new javax.swing.JMenu();
+        jMnJugadoresTorneo = new javax.swing.JMenuItem();
+        jMnTorneosJugador = new javax.swing.JMenuItem();
         jMnSalir = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -131,6 +134,31 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
         jMenuBar1.add(jMnRanking);
+
+        jMnInformes.setText("Informes");
+        jMnInformes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMnInformesActionPerformed(evt);
+            }
+        });
+
+        jMnJugadoresTorneo.setText("Jugadores x Torneo");
+        jMnJugadoresTorneo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMnJugadoresTorneoActionPerformed(evt);
+            }
+        });
+        jMnInformes.add(jMnJugadoresTorneo);
+
+        jMnTorneosJugador.setText("Torneos x Jugador");
+        jMnTorneosJugador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMnTorneosJugadorActionPerformed(evt);
+            }
+        });
+        jMnInformes.add(jMnTorneosJugador);
+
+        jMenuBar1.add(jMnInformes);
 
         jMnSalir.setText("Salir");
         jMnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -317,6 +345,48 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMnRankingMouseClicked
 
+    private void jMnInformesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnInformesActionPerformed
+        
+    }//GEN-LAST:event_jMnInformesActionPerformed
+
+    private void jMnJugadoresTorneoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnJugadoresTorneoActionPerformed
+           try {
+            Conexion conexion = new Conexion();
+            TorneoData torneoData = new TorneoData(conexion);
+            PartidoData partidoData = new PartidoData(conexion);
+            JugadorData jugadorData = new JugadorData(conexion);
+            escritorio.removeAll();
+            escritorio.repaint();
+            ListarJugadoresPorTorneo ljt = new ListarJugadoresPorTorneo(torneoData, partidoData, jugadorData);
+            ljt.setVisible(true);
+            escritorio.add(ljt);
+            escritorio.moveToFront(ljt);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Resultados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMnJugadoresTorneoActionPerformed
+
+    private void jMnTorneosJugadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnTorneosJugadorActionPerformed
+       try {
+            Conexion conexion = new Conexion();
+            TorneoData torneoData = new TorneoData(conexion);
+            PartidoData partidoData = new PartidoData(conexion);
+            JugadorData jugadorData = new JugadorData(conexion);
+            escritorio.removeAll();
+            escritorio.repaint();
+            ListarTorneosPorJugador ltj = new ListarTorneosPorJugador(torneoData, partidoData, jugadorData);
+            ltj.setVisible(true);
+            escritorio.add(ltj);
+            escritorio.moveToFront(ltj);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Resultados.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMnTorneosJugadorActionPerformed
+
+    
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -359,12 +429,15 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMnConfTorneo;
     private javax.swing.JMenuItem jMnContratos;
     private javax.swing.JMenuItem jMnEstadio;
+    private javax.swing.JMenu jMnInformes;
     private javax.swing.JMenuItem jMnJugador;
+    private javax.swing.JMenuItem jMnJugadoresTorneo;
     private javax.swing.JMenuItem jMnPatrocinador;
     private javax.swing.JMenu jMnPatrocinios;
     private javax.swing.JMenu jMnRanking;
     private javax.swing.JMenu jMnResultado;
     private javax.swing.JMenu jMnSalir;
     private javax.swing.JMenuItem jMnTorneo;
+    private javax.swing.JMenuItem jMnTorneosJugador;
     // End of variables declaration//GEN-END:variables
 }

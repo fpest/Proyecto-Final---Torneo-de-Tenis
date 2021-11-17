@@ -202,6 +202,18 @@ public class ABMEstadio extends javax.swing.JInternalFrame {
 
         chkbActivo.setText("Activo");
 
+        txtNumIdentif.setNextFocusableComponent(txtCiudad);
+
+        txtCiudad.setNextFocusableComponent(txtDireccion);
+
+        txtDireccion.setNextFocusableComponent(txtLargo);
+
+        txtLargo.setNextFocusableComponent(txtAncho);
+
+        txtAncho.setNextFocusableComponent(txtCantEspectadores);
+
+        txtCantEspectadores.setNextFocusableComponent(cbCategoria);
+
         cbEstado.setMaximumRowCount(20);
         cbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Desocupada", "Ocupada" }));
 

@@ -407,7 +407,7 @@ public class PartidoData {
         List<Partido> listaPartidos = new ArrayList<>();
         Partido partido = new Partido();
 
-        String sql = "SELECT DISTINCT `IDJugadorGanador`FROM `partido`pa JOIN `jugador` ju on ju.IDJugador = pa.IDJugadorGanador Where `IDTorneo` = ?";
+        String sql = "SELECT DISTINCT `IDJugadorGanador`FROM `partido`pa JOIN `jugador` ju on ju.IDJugador = pa.IDJugadorGanador Where `IDTorneo` = ? and ju.Activo = 1";
       
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -429,15 +429,16 @@ public class PartidoData {
         return listaPartidos;
     }
     
-    public int cantidadPartidosGanadosJugador(Jugador jugador){
+    public int cantidadPartidosGanadosJugador(Jugador jugador, Torneo torneo){
            Partido partido=null;
         int cantidadPartidosGanados=0;
-        String sql = "SELECT COUNT(`IDPartido`) FROM `partido` WHERE IDJugadorGanador = ? and Activo = 1";
+        String sql = "SELECT COUNT(`IDPartido`) FROM `partido` WHERE IDJugadorGanador = ? and IDTorneo = ? and Activo = 1";
  
 
 try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, jugador.getIdJugador());
+            ps.setInt(2, torneo.getIdTorneo());
             
            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -448,7 +449,70 @@ try {
         }
         return cantidadPartidosGanados;
     }
-    }
     
 
-
+    public List<Torneo> obtenerTorneosPorJugador(Jugador jugador){
+        List<Torneo> listaTorneos = new ArrayList<>();
+   
+        Torneo torneo = new Torneo();
+        
+        
+        String sql = "SELECT DISTINCT(tor.nombre) FROM partido par JOIN torneo tor on tor.IDTorneo = par.IDTorneo WHERE (`IDJugador1`=? or `IDJugador2`=?) and tor.Activo=1";
+       
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, jugador.getIdJugador());
+            ps.setInt(2, jugador.getIdJugador());
+            
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                torneo = new Torneo();
+               
+                //   estadio = estadioData.buscarEstadio(1);
+                torneo.setNombre(rs.getString("tor.nombre"));
+                
+                listaTorneos.add(torneo);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            System.out.println("Error al buscar los torneos ");
+        }
+        return listaTorneos;
+    }
+    
+   
+        public List<Jugador> obtenerJugadoresPorTorneo(Torneo torneo){
+        List<Jugador> listaJugadores = new ArrayList<>();
+   
+        Jugador jugador = new Jugador();
+        
+        
+        String sql = "SELECT DISTINCT(IDJugador), Nombre, Apellido FROM ((SELECT jug1.IDJugador as IDJugador, jug1.nombre as Nombre, jug1.apellido as Apellido FROM partido par JOIN jugador jug1 on par.IDJugador1 = jug1.IDJugador WHERE IDTorneo = ? and jug1.Activo=1) UNION ALL (SELECT jug2.IDJugador as IDJugador, jug2.nombre as Nombre, jug2.apellido as Apellido FROM partido par JOIN jugador jug2 on par.IDJugador2 = jug2.IDJugador WHERE IDTorneo = ? and jug2.Activo=1)) jugadores;";
+       
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, torneo.getIdTorneo());
+            ps.setInt(2, torneo.getIdTorneo());
+            
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                jugador = new Jugador();
+               
+                //   estadio = estadioData.buscarEstadio(1);
+                jugador.setIdJugador(rs.getInt("IDJugador"));
+                jugador.setNombre(rs.getString("Nombre"));
+                jugador.setApellido(rs.getString("Apellido"));
+                
+//                System.out.println(jugador.getIdJugador() + " " + jugador.getApellido() + " " + jugador.getNombre());
+                listaJugadores.add(jugador);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            System.out.println("Error al buscar los torneos ");
+        }
+        
+        return listaJugadores;
+        }
+        
+        
+}

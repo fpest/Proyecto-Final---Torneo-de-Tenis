@@ -147,9 +147,8 @@ public class PatrocinioData {
         List<Patrocinio> patrocinios = new ArrayList<>();
         Patrocinio patrocinio = null;
       
-        String sql = "SELECT `IDJugador`,`IDPatrocinador`,`Indumentaria`,`FechaIniContrato`,`FechaFinContrato`, `Activo` FROM `patrocinio` WHERE `IDJugador`= " + jugador.getIdJugador();
+        String sql = "SELECT `IDJugador`,ptn.`IDPatrocinador`,`Indumentaria`,`FechaIniContrato`,`FechaFinContrato`, ptn.`Activo` FROM `patrocinio`  ptn  JOIN `Patrocinador` pat on pat.IDPatrocinador = ptn.IDPatrocinador WHERE pat.Activo = 1 and ptn.Activo = 1 and  `IDJugador`= " + jugador.getIdJugador();
 
-     
         try {
             PreparedStatement ps = con.prepareStatement(sql);
 
@@ -233,12 +232,12 @@ public class PatrocinioData {
         
         Patrocinio patrocinio = null;
 
-        String sql = "SELECT `IDPatrocinio`, `IDJugador`,`IDPatrocinador`,`Indumentaria`,`FechaIniContrato`,`FechaFinContrato`, `Activo` "
-                + "FROM `patrocinio` "
-                + "WHERE `IDJugador` = " + jugador.getIdJugador() + "  and `FechaIniContrato` = '" + fechaInicioContrato + "' and `FechaFinContrato` = '" + fechaFinContrato + "' and `Indumentaria` = '" + indumentaria + "' and `Activo`= " + activo + " ";
+        String sql = "SELECT `IDPatrocinio`, IDJugador, ptn.`IDPatrocinador`,`Indumentaria`,`FechaIniContrato`,`FechaFinContrato`, ptn.`Activo` "
+                + " FROM `patrocinio` ptn  JOIN `Patrocinador` pat on pat.IDPatrocinador = ptn.IDPatrocinador"
+                + " WHERE `IDJugador` = " + jugador.getIdJugador() + "  and `FechaIniContrato` = '" + fechaInicioContrato + "' and `FechaFinContrato` = '" + fechaFinContrato + "' and `Indumentaria` = '" + indumentaria + "' and ptn.Activo= " + activo + " and pat.Activo = 1";
                   
-      
-//          JOptionPane.showMessageDialog(null, jugador.getIdJugador() + " " + fechaInicioContrato  + " " + fechaFinContrato  + " " + indumentaria  + " " + activo);
+//        System.out.println(sql);
+//       JOptionPane.showMessageDialog(null, jugador.getIdJugador() + " " + fechaInicioContrato  + " " + fechaFinContrato  + " " + indumentaria  + " " + activo);
           
           
         try {
@@ -277,7 +276,7 @@ public class PatrocinioData {
     public int cantidadPatrociniosActivos(Jugador jugador){
         Patrocinio patrocinio=null;
         int cantidadPatrociniosActivos=0;
-        String sql = "SELECT COUNT(`IDPatrocinio`) FROM `patrocinio` pa join `jugador` ju on ju.IDJugador = pa.IDJugador WHERE pa.IDJugador = ? and ju.Activo= 1 and pa.Activo = 1 and (now()>`FechaIniContrato` AND now()<`FechaFinContrato`)";
+        String sql = "SELECT COUNT(`IDPatrocinio`) FROM `patrocinio` pa JOIN `Patrocinador` pat on pat.IDPatrocinador = pa.IDPatrocinador join `jugador` ju on ju.IDJugador = pa.IDJugador WHERE pa.IDJugador = ? and ju.Activo= 1 and pa.Activo = 1 and pat.Activo=1 and (now()>`FechaIniContrato` AND now()<`FechaFinContrato`)";
 //          JOptionPane.showMessageDialog(null, jugador.getIdJugador() + " " + fechaInicioContrato  + " " + fechaFinContrato  + " " + indumentaria  + " " + activo);
         try {
             PreparedStatement ps = con.prepareStatement(sql);

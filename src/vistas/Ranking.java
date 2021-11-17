@@ -99,7 +99,7 @@ public class Ranking extends javax.swing.JInternalFrame {
            
             for (Partido partido : listaPartidos) {
                jugadorGanador = partido.getJugadorGanador();
-               cantidadPartidosGanados = partidoData.cantidadPartidosGanadosJugador(jugadorGanador);
+               cantidadPartidosGanados = partidoData.cantidadPartidosGanadosJugador(jugadorGanador,(Torneo) cbTorneos.getSelectedItem() );
                cantidadPatrociniosActivos = patrocinioData.cantidadPatrociniosActivos(jugadorGanador);
                puntosTotales = cantidadPartidosGanados * 3 + cantidadPatrociniosActivos;
                
