@@ -63,7 +63,7 @@ public class Resultados extends javax.swing.JInternalFrame {
 
         
         llenarComboTorneos(true);
-        llenarTablaDePartidos(cbTorneos.getSelectedItem().toString());
+        if (cbTorneos.getItemCount()!=0) llenarTablaDePartidos(cbTorneos.getSelectedItem().toString());
         limpiarCampos();
         deshabilitarCampos();
         
@@ -73,6 +73,8 @@ public class Resultados extends javax.swing.JInternalFrame {
    private void llenarComboTorneos(Boolean activo) {
 
         listaTorneos = (ArrayList) torneoData.obtenerTodosLosTorneos();
+        
+        if (!listaTorneos.isEmpty()){
         int largoLista = listaTorneos.size();
         Torneo[] nombre = new Torneo[largoLista];
 
@@ -84,10 +86,11 @@ public class Resultados extends javax.swing.JInternalFrame {
                 i++;
             }
         }
-
+        }
     }
     
    private void deshabilitarCampos(){
+       btnRegistrar.setEnabled(false);
    cbJugadores.setEnabled(false);
    spnGanadorPrimerSet.setEnabled(false);
    spnPerdedorPrimerSet.setEnabled(false);
@@ -99,6 +102,7 @@ public class Resultados extends javax.swing.JInternalFrame {
    
    }
    private void habilitarCampos(){
+       btnRegistrar.setEnabled(true);
    cbJugadores.setEnabled(true);
    spnGanadorPrimerSet.setEnabled(true);
    spnPerdedorPrimerSet.setEnabled(true);
@@ -463,10 +467,11 @@ public class Resultados extends javax.swing.JInternalFrame {
     
     private void tblResultadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblResultadosMouseClicked
                 
+        
         try{
         int filaSeleccionada = tblResultados.getSelectedRow();
-//        JOptionPane.showMessageDialog(null, tblPatrocinio.getValueAt(filaSeleccionada, 0));
-        
+        if (tblResultados.getRowCount()!= 0 && tblResultados.getValueAt(filaSeleccionada, 0)!= null){    
+
           String estado = ((String) tblResultados.getValueAt(filaSeleccionada, 5));
           int idPartido = ((Integer) tblResultados.getValueAt(filaSeleccionada, 0));
           
@@ -483,13 +488,14 @@ public class Resultados extends javax.swing.JInternalFrame {
            Date hoy = new Date();
            habilitarCampos();
           
-          }
-           
+                }
+            }
+        
          }catch(ArrayIndexOutOfBoundsException ex){
            JOptionPane.showMessageDialog(null, "Debe seleccionar un item de la tabla.");
          }
           
-          
+        
     }//GEN-LAST:event_tblResultadosMouseClicked
 
     private void cbTorneosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTorneosActionPerformed

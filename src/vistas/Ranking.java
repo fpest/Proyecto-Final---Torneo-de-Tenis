@@ -60,13 +60,14 @@ public class Ranking extends javax.swing.JInternalFrame {
         this.jugadorData = jugadorData;
 
         llenarComboTorneos(true);
-        llenarTablaRanking((Torneo) cbTorneos.getSelectedItem());
+        if (cbTorneos.getItemCount()!=0) llenarTablaRanking((Torneo) cbTorneos.getSelectedItem());
 
     }
     
     private void llenarComboTorneos(boolean activo){
     
         listaTorneos = (ArrayList) torneoData.obtenerTodosLosTorneos();
+        if (!listaTorneos.isEmpty()){
         int largoLista = listaTorneos.size();
         Torneo[] nombre = new Torneo[largoLista];
 
@@ -77,7 +78,7 @@ public class Ranking extends javax.swing.JInternalFrame {
                 cbTorneos.addItem(torneo);
                 i++;
             }
-        }
+        }}
     }
     
     private void llenarTablaRanking(Torneo torneo){

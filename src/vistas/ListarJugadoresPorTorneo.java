@@ -46,13 +46,15 @@ public class ListarJugadoresPorTorneo extends javax.swing.JInternalFrame {
         this.jugadorData = jugadorData;
 
         llenarComboTorneos(true);
-        llenarListaJugadores((Torneo) cbTorneos.getSelectedItem());
+        if (cbTorneos.getItemCount()!=0) llenarListaJugadores((Torneo) cbTorneos.getSelectedItem());
 
     }
 
      
      private void llenarComboTorneos(Boolean Activo){
      listaTorneos = (ArrayList) torneoData.obtenerTodosLosTorneos();
+     
+     if (!listaTorneos.isEmpty()){
         int largoLista = listaTorneos.size();
         Torneo[] nombre = new Torneo[largoLista];
 
@@ -65,7 +67,7 @@ public class ListarJugadoresPorTorneo extends javax.swing.JInternalFrame {
             }
         }
     }
-     
+     }
      
      private void llenarListaJugadores(Torneo torneo){
          

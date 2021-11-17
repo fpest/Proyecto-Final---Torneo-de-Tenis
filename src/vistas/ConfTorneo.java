@@ -67,13 +67,16 @@ public class ConfTorneo extends javax.swing.JInternalFrame {
         partido = new Partido();
         jugadorGanador = new Jugador();
         listaJugadores = (ArrayList) jugadorData.obtenerJugador();
-
+        if (!listaJugadores.isEmpty())
+        {
         llenarListaJugadores(true);
         llenarComboTorneos(true);
         llenarComboEstadios(true);
         jSpHora.setValue(12);
-        llenarTablaDePartidos(cbTorneos.getSelectedItem().toString());
-
+        if (cbTorneos.getItemCount()!=0) llenarTablaDePartidos(cbTorneos.getSelectedItem().toString());
+                
+        
+        }
     }
 
     
@@ -99,7 +102,7 @@ public class ConfTorneo extends javax.swing.JInternalFrame {
         model.setRowCount(0);
 
         List<Partido> listaPartidos = partidoData.obtenerPartidoTorneo(nombreTorneo, 1);
-
+        if (!listaPartidos.isEmpty()){
         for (Partido partido : listaPartidos) {
 
             String estadoPartido = null;
@@ -123,11 +126,18 @@ public class ConfTorneo extends javax.swing.JInternalFrame {
 
             model.addRow(new Object[]{partido.getIdPartido(),"Estadio " + partido.getEstadio().getNumeroIdentificador(), partido.getJugador1().getApellido() + ", " + partido.getJugador1().getNombre(), partido.getJugador2().getApellido() + ", " + partido.getJugador2().getNombre(), fechaHora, fechaHoraFin, estadoPartido});
         }
-    }
+        }
+        
+        
+        
+        }
 
     private void llenarComboTorneos(Boolean activo) {
 
         listaTorneos = (ArrayList) torneoData.obtenerTodosLosTorneos();
+        
+        if (!listaTorneos.isEmpty()){
+        
         int largoLista = listaTorneos.size();
         Torneo[] nombre = new Torneo[largoLista];
 
@@ -139,12 +149,14 @@ public class ConfTorneo extends javax.swing.JInternalFrame {
                 i++;
             }
         }
-
+        }
     }
 
     private void llenarComboEstadios(Boolean activo) {
 
         listaEstadios = (ArrayList) estadioData.obtenerEstadio();
+        
+        if (!listaEstadios.isEmpty()){
         int largoLista = listaEstadios.size();
         Estadio[] nombre = new Estadio[largoLista];
 
@@ -156,9 +168,9 @@ public class ConfTorneo extends javax.swing.JInternalFrame {
                 i++;
             }
         }
-
+        }
     }
-
+    
     private void llenarListaJugadores(Boolean activo) {
 
         if (txtBuscarJugador.getText() != "") {
@@ -541,6 +553,11 @@ public class ConfTorneo extends javax.swing.JInternalFrame {
         }
         
         
+       
+        
+        
+        
+        
         boolean validado = true;
 
         // verificamos Jugadores (hay que verificar que estos jugadores no esten en otro partido)
@@ -557,6 +574,11 @@ public class ConfTorneo extends javax.swing.JInternalFrame {
             return false;
         }
 
+          if (cbTorneos.getItemCount()==0 || cbEstadio.getItemCount()==0){
+         JOptionPane.showMessageDialog(null, "Deben haber cargado tanto Torneos como Estadios para poder configurar un torneo.");
+            return false;
+        } 
+        
         // verificamos fecha y hora (hay que verificar que la fecha este dentro del rango del torneo
         // y que en esa cancha no se juegue en el mismo horario otro partido
         // por ahora solo vemos si han seleccionado una fecha

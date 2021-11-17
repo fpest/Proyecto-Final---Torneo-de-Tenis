@@ -43,7 +43,7 @@ public class ListarTorneosPorJugador extends javax.swing.JInternalFrame {
         this.jugadorData = jugadorData;
 
        llenarComboJugadores(true);
-       llenarListaTorneos((Jugador) cbJugadores.getSelectedItem());
+       if (cbJugadores.getItemCount()!=0) llenarListaTorneos((Jugador) cbJugadores.getSelectedItem());
 
     }
 
@@ -167,6 +167,7 @@ public class ListarTorneosPorJugador extends javax.swing.JInternalFrame {
     
     private void llenarComboJugadores(Boolean activo){
      listaJugadores = (ArrayList) jugadorData.obtenerJugador();
+     if (!listaJugadores.isEmpty()){
         int largoLista = listaJugadores.size();
         Jugador[] nombre = new Jugador[largoLista];
 
@@ -179,7 +180,7 @@ public class ListarTorneosPorJugador extends javax.swing.JInternalFrame {
             }
         }
     }
-
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<Jugador> cbJugadores;

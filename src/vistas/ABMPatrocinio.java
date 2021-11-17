@@ -78,6 +78,7 @@ public class ABMPatrocinio extends javax.swing.JInternalFrame {
 
         List<Patrocinio> listaPatrocinios = patrocinioData.obtenerPatrocinioJugador((Jugador) cbJugador.getSelectedItem());
 
+        if (!listaPatrocinios.isEmpty()){
         for (Patrocinio patrocinio : listaPatrocinios) {
 
             if ((rbActivos.isSelected() && (patrocinio.isActivo())) || (!rbActivos.isSelected() && (!patrocinio.isActivo()))) {
@@ -85,11 +86,15 @@ public class ABMPatrocinio extends javax.swing.JInternalFrame {
             }
 
         }
+        }
     }
 
     private void llenarComboJugadores(Boolean activo) {
 
         listaJugadores = (ArrayList) jugadorData.obtenerJugador();
+        
+        if (!listaJugadores.isEmpty()){
+        
         int largoLista = listaJugadores.size();
         Jugador[] nombre = new Jugador[largoLista];
 
@@ -102,10 +107,13 @@ public class ABMPatrocinio extends javax.swing.JInternalFrame {
             }
         }
     }
+    }
 
     private void llenarComboPatrocinadores(Boolean activo) {
 
         listaPatrocinadores = (ArrayList) patrocinadorData.obtenerPatrocinador();
+     if (!listaPatrocinadores.isEmpty()){
+        
         int largoLista = listaPatrocinadores.size();
         Patrocinador[] nombre = new Patrocinador[largoLista];
 
@@ -117,7 +125,7 @@ public class ABMPatrocinio extends javax.swing.JInternalFrame {
                 i++;
             }
         }
-    }
+    }}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -376,6 +384,12 @@ public class ABMPatrocinio extends javax.swing.JInternalFrame {
             return false;
         }
 
+        if (cbIndumentaria.getItemCount()==0 || cbJugador.getItemCount()==0 || cbPatrocinador.getItemCount()==0){
+         JOptionPane.showMessageDialog(null, "Deben haber cargado tanto Indumentarias , Jugadores y Patrocinadores para poder Vincularlos por un Contrato.");
+            return false;
+        } 
+        
+        
         List<Patrocinio> listaPatrocinios = patrocinioData.obtenerPatrocinioJugador((Jugador) cbJugador.getSelectedItem());
         for (Patrocinio patrocinio : listaPatrocinios) {
 
