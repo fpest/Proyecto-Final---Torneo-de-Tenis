@@ -6,10 +6,10 @@ import java.time.LocalDate;
 
 
 public class Torneo {
-    int idTorneo;
-    String nombre;
-    LocalDate fechaIn, fechaFn;
-    boolean activo;
+    private int idTorneo;
+    private String nombre;
+    private LocalDate fechaIn, fechaFn;
+    private boolean activo;
 
     public Torneo() {
     }

@@ -42,14 +42,15 @@ public class ABMPatrocinio extends javax.swing.JInternalFrame {
 
     private ArrayList<Jugador> listaJugadores = new ArrayList<>();
     private ArrayList<Patrocinador> listaPatrocinadores = new ArrayList<>();
-
+    private PatrocinioData patrocinioData;
+    private ArrayList<Patrocinio> listaPatrocinio = new ArrayList<>();
+    private Patrocinio patrocinio;
+    
     public ABMPatrocinio() {
         initComponents();
 
     }
-    PatrocinioData patrocinioData;
-    ArrayList<Patrocinio> listaPatrocinio = new ArrayList<>();
-    Patrocinio patrocinio;
+    
 
     public ABMPatrocinio(PatrocinioData patrocinioData, JugadorData jugadorData, PatrocinadorData patrocinadorData) {
         initComponents();
@@ -66,6 +67,7 @@ public class ABMPatrocinio extends javax.swing.JInternalFrame {
         
         jdcFinContrato.setDate(convertToDate(proximoAnoLd));
         rbActivos.setSelected(true);
+        
         llenarComboJugadores(true);
         llenarComboPatrocinadores(true);
         llenarTablaPatrocinios(true);
@@ -73,6 +75,9 @@ public class ABMPatrocinio extends javax.swing.JInternalFrame {
     }
 
     private void llenarTablaPatrocinios(boolean Activo) {
+        
+     if (cbJugador.getItemCount()!=0){
+        
         DefaultTableModel model = (DefaultTableModel) tblPatrocinio.getModel();
         model.setRowCount(0);
 
@@ -86,7 +91,7 @@ public class ABMPatrocinio extends javax.swing.JInternalFrame {
             }
 
         }
-        }
+        }}
     }
 
     private void llenarComboJugadores(Boolean activo) {
@@ -370,7 +375,7 @@ public class ABMPatrocinio extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_cbJugadorActionPerformed
 
-     public Date convertToDate(LocalDate dateToConvert) {
+     private Date convertToDate(LocalDate dateToConvert) {
         return java.sql.Date.valueOf(dateToConvert);
     }
     private LocalDate convertToLocalDate(Date dateToConvert) {

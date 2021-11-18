@@ -16,9 +16,9 @@ import modelo.Estadio;
  */
 public class ABMEstadio extends javax.swing.JInternalFrame {
     
-       EstadioData estadioData;
-        ArrayList<Estadio> listaEstadios = new ArrayList<>();
-        Estadio estadio;
+       private EstadioData estadioData;
+       private ArrayList<Estadio> listaEstadios = new ArrayList<>();
+       private Estadio estadio;
         
     /**
      * Creates new form ABMEstadio
@@ -37,7 +37,7 @@ public class ABMEstadio extends javax.swing.JInternalFrame {
         desactivarControles();
     }
         
-    public void limpiarCampos(){
+    private void limpiarCampos(){
         rbtnActivos.setEnabled(true);
         rbtnInactivos.setEnabled(true);
         txtNumIdentif.setText("");
@@ -55,7 +55,7 @@ public class ABMEstadio extends javax.swing.JInternalFrame {
         btnAlta.setEnabled(true);
     }
     
-    public void llenarListaEstadios(Boolean activo){
+    private void llenarListaEstadios(Boolean activo){
     
         
         if (txtBuscarEstadio.getText() != "") {
@@ -89,7 +89,7 @@ public class ABMEstadio extends javax.swing.JInternalFrame {
         });
     }
     
-    public void desactivarControles(){
+    private void desactivarControles(){
         btnBaja.setEnabled(false);
         btnModificaciones.setEnabled(false);
         txtNumIdentif.setEnabled(false);
@@ -103,7 +103,7 @@ public class ABMEstadio extends javax.swing.JInternalFrame {
         cbEstado.setEnabled(false);
     }
     
-    public void activarControles(){
+    private void activarControles(){
         btnBaja.setEnabled(true);
         btnModificaciones.setEnabled(true);
         txtNumIdentif.setEnabled(true);
@@ -568,7 +568,13 @@ public class ABMEstadio extends javax.swing.JInternalFrame {
     private boolean validarCampos() {
         boolean validado = true;
         try {
-            long cantidadEspectadores = Long.parseLong(txtNumIdentif.getText());
+            long cantidadEspectadores = Long.parseLong(txtCantEspectadores.getText());
+            
+            if (cantidadEspectadores < 2000 || cantidadEspectadores > 20000 ){
+                JOptionPane.showMessageDialog(null, "El numero de espectadores debe ser mayor que 2000 y menor que 20000");
+                validado = false;
+            }
+            
         } catch (NumberFormatException nf) {
             JOptionPane.showMessageDialog(null, "Debe ingresar sólo números en el campo Cantidad de Espectadores.");
             txtNumIdentif.requestFocus();
@@ -593,6 +599,14 @@ public class ABMEstadio extends javax.swing.JInternalFrame {
         
         try {
             double numeroIdentificador = Integer.parseInt(txtNumIdentif.getText());
+            
+            if (numeroIdentificador < 1 || numeroIdentificador > 30 ){
+                JOptionPane.showMessageDialog(null, "El numero identificador debe ser mayor que 0 y menor que 30");
+                validado = false;
+            }
+            
+            
+            
         } catch (NumberFormatException nf) {
             JOptionPane.showMessageDialog(null, "Debe ingresar sólo números en el campo Numero Identificador.");
             txtNumIdentif.requestFocus();

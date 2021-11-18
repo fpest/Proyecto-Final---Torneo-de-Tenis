@@ -22,9 +22,9 @@ public class ABMJugador extends javax.swing.JInternalFrame {
      * Creates new form ABMJugador
      */
     
-    JugadorData jugadorData;
-    ArrayList<Jugador> listaJugadores = new ArrayList<>();
-    Jugador jugador;
+    private JugadorData jugadorData;
+    private ArrayList<Jugador> listaJugadores = new ArrayList<>();
+    private Jugador jugador;
  
     
     public ABMJugador() {
@@ -43,7 +43,7 @@ public class ABMJugador extends javax.swing.JInternalFrame {
         
     }
     
-    public void limpiarCampos()
+    private void limpiarCampos()
         {rbtnActivos.setEnabled(true);
         rbtnInactivos.setEnabled(true);
 //        rbtnActivos.setSelected(true);
@@ -62,7 +62,7 @@ public class ABMJugador extends javax.swing.JInternalFrame {
         btnAlta.setEnabled(true);
     }
     
-    public void llenarListaJugadores(Boolean activo){
+    private void llenarListaJugadores(Boolean activo){
     
         
         if (txtBuscarJugador.getText() != "") {
@@ -97,7 +97,7 @@ public class ABMJugador extends javax.swing.JInternalFrame {
     }
     
     
-    public void desactivarControles(){
+    private void desactivarControles(){
          btnBaja.setEnabled(false);
         btnModificaciones.setEnabled(false);
         txtNombre.setEnabled(false);
@@ -112,7 +112,7 @@ public class ABMJugador extends javax.swing.JInternalFrame {
         cbEstilo.setEnabled(false);
     }
     
-    public void activarControles(){
+    private void activarControles(){
         btnBaja.setEnabled(true);
         btnModificaciones.setEnabled(true);
         txtNombre.setEnabled(true);
@@ -143,11 +143,11 @@ public class ABMJugador extends javax.swing.JInternalFrame {
         
     }
     
-     public LocalDate convertToLocalDate(Date dateToConvert) {
+     private LocalDate convertToLocalDate(Date dateToConvert) {
         return new java.sql.Date(dateToConvert.getTime()).toLocalDate();
     }
 
-    public Date convertToDate(LocalDate dateToConvert) {
+    private Date convertToDate(LocalDate dateToConvert) {
         return java.sql.Date.valueOf(dateToConvert);
     }
 
@@ -618,6 +618,12 @@ public class ABMJugador extends javax.swing.JInternalFrame {
         
         try {
             double modelo = Double.parseDouble(txtPeso.getText());
+            
+               if (modelo < 30 || modelo > 150 ){
+JOptionPane.showMessageDialog(null, "El peso del jugador debe ser mayor a 30 y menor a 150 kg.");
+                   validado = false;
+            }
+            
         } catch (NumberFormatException nf) {
             JOptionPane.showMessageDialog(null, "Debe ingresar sólo números en el campo Peso.");
             txtPeso.requestFocus();
@@ -626,6 +632,10 @@ public class ABMJugador extends javax.swing.JInternalFrame {
         
         try {
             double modelo = Double.parseDouble(txtAltura.getText());
+            
+            if (modelo < 100 || modelo > 220 ){
+                JOptionPane.showMessageDialog(null, "La altura del jugador debe ser mayor de 1 metro y menor a 2 metros 20 cms");
+                validado = false;}
         } catch (NumberFormatException nf) {
             JOptionPane.showMessageDialog(null, "Debe ingresar sólo números en el campo Altura.");
             txtAltura.requestFocus();

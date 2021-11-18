@@ -147,7 +147,7 @@ public class PatrocinioData {
         List<Patrocinio> patrocinios = new ArrayList<>();
         Patrocinio patrocinio = null;
       
-        String sql = "SELECT `IDJugador`,ptn.`IDPatrocinador`,`Indumentaria`,`FechaIniContrato`,`FechaFinContrato`, ptn.`Activo` FROM `patrocinio`  ptn  JOIN `Patrocinador` pat on pat.IDPatrocinador = ptn.IDPatrocinador WHERE pat.Activo = 1 and ptn.Activo = 1 and  `IDJugador`= " + jugador.getIdJugador();
+        String sql = "SELECT `IDJugador`,ptn.`IDPatrocinador`,`Indumentaria`,`FechaIniContrato`,`FechaFinContrato`, ptn.`Activo` FROM `patrocinio`  ptn  JOIN `Patrocinador` pat on pat.IDPatrocinador = ptn.IDPatrocinador WHERE pat.Activo = 1 and  `IDJugador`= " + jugador.getIdJugador();
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -270,9 +270,7 @@ public class PatrocinioData {
         return patrocinio;
     }
 
-    
-    //SELECT COUNT(`IDPatrocinio`) FROM `patrocinio` pa join `jugador` ju on ju.IDJugador = pa.IDJugador WHERE pa.IDJugador = 204 and ju.Activo= 1 and pa.Activo = 1 and (now()>`FechaIniContrato` AND now()<`FechaFinContrato`);
-    
+        
     public int cantidadPatrociniosActivos(Jugador jugador){
         Patrocinio patrocinio=null;
         int cantidadPatrociniosActivos=0;

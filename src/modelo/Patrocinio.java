@@ -6,12 +6,12 @@ import java.time.LocalDate;
 
 
 public class Patrocinio {
-    int idPatrocinio;
-    Jugador jugador;
-    Patrocinador patrocinador;
-    String indumentaria;
-    LocalDate fechaContraroIn, fechaContratoFn;
-    boolean activo;
+    private int idPatrocinio;
+    private Jugador jugador;
+    private Patrocinador patrocinador;
+    private String indumentaria;
+    private LocalDate fechaContraroIn, fechaContratoFn;
+    private boolean activo;
 
     public Patrocinio() {
     }

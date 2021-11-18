@@ -121,7 +121,7 @@ public class EstadioData {
         List<Estadio> estadios = new ArrayList<>();
         Estadio estadio = null;
 
-        String sql = "SELECT * FROM estadio Where NumeroIdentificador like '%" + cadena + "%' or Ciudad like '%" + cadena + "%'  or Direccion like '%" + cadena + "%'";
+        String sql = "SELECT * FROM estadio Where NumeroIdentificador like '%" + cadena + "%' or Ciudad like '%" + cadena + "%'  or Categoria like '%" + cadena + "%'";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);

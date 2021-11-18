@@ -11,9 +11,9 @@ import modelo.Torneo;
 
 public class ABMTorneo extends javax.swing.JInternalFrame {
 
-    TorneoData torneoData;
-    ArrayList<Torneo> listaTorneos = new ArrayList<>();
-    Torneo torneo;
+    private TorneoData torneoData;
+    private ArrayList<Torneo> listaTorneos = new ArrayList<>();
+    private Torneo torneo;
    
     public ABMTorneo() {
         initComponents();
@@ -29,7 +29,7 @@ public class ABMTorneo extends javax.swing.JInternalFrame {
         desactivarControles();
     }
     
-    public void limpiarCampos() {
+    private void limpiarCampos() {
         rbtnActivos.setEnabled(true);
         rbtnInactivos.setEnabled(true);
         txtNombre.setText("");
@@ -42,7 +42,7 @@ public class ABMTorneo extends javax.swing.JInternalFrame {
         btnAltaT.setEnabled(true);
     }
 
-    public void llenarListaTorneos(Boolean activo) {
+    private void llenarListaTorneos(Boolean activo) {
 
         if (!"".equals(txtBuscarTorneo.getText())) {
             listaTorneos = (ArrayList) torneoData.obtenerTorneos(txtBuscarTorneo.getText());
@@ -77,7 +77,7 @@ public class ABMTorneo extends javax.swing.JInternalFrame {
         });
     }
 
-    public void desactivarControles() {
+    private void desactivarControles() {
         btnBajaT.setEnabled(false);
         btnModificacionesT.setEnabled(false);
         txtNombre.setEnabled(false);
@@ -86,7 +86,7 @@ public class ABMTorneo extends javax.swing.JInternalFrame {
         chkbActivoT.setEnabled(false);
     }
 
-    public void activarControles() {
+    private void activarControles() {
         btnBajaT.setEnabled(true);
         btnModificacionesT.setEnabled(true);
         txtNombre.setEnabled(true);
@@ -134,11 +134,11 @@ public class ABMTorneo extends javax.swing.JInternalFrame {
         return torneo;
     }
 
-    public LocalDate convertToLocalDate(Date dateToConvert) {
+    private LocalDate convertToLocalDate(Date dateToConvert) {
         return new java.sql.Date(dateToConvert.getTime()).toLocalDate();
     }
 
-    public Date convertToDate(LocalDate dateToConvert) {
+    private Date convertToDate(LocalDate dateToConvert) {
         return java.sql.Date.valueOf(dateToConvert);
     }
 

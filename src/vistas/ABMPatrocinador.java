@@ -24,9 +24,9 @@ public class ABMPatrocinador extends javax.swing.JInternalFrame {
         initComponents();
     }
 
-           PatrocinadorData patrocinadorData;
-        ArrayList<Patrocinador> listaPatrocinadores = new ArrayList<>();
-        Patrocinador patrocinador;
+        private PatrocinadorData patrocinadorData;
+        private ArrayList<Patrocinador> listaPatrocinadores = new ArrayList<>();
+        private Patrocinador patrocinador;
 
     public ABMPatrocinador(PatrocinadorData patrocinadorData) {
         initComponents();
@@ -39,7 +39,7 @@ public class ABMPatrocinador extends javax.swing.JInternalFrame {
         
     }
 
-    public void limpiarCampos(){
+    private void limpiarCampos(){
         
         rbtnActivos.setEnabled(true);
         rbtnInactivos.setEnabled(true);
@@ -51,7 +51,7 @@ public class ABMPatrocinador extends javax.swing.JInternalFrame {
         btnAlta.setEnabled(true);
     }
     
-    public void llenarListaPatrocinadores(Boolean activo){
+    private void llenarListaPatrocinadores(Boolean activo){
     
         
         if (txtBuscarPatro.getText() != "") {
@@ -86,14 +86,14 @@ public class ABMPatrocinador extends javax.swing.JInternalFrame {
     }
     
     
-    public void desactivarControles(){
+    private void desactivarControles(){
          btnBaja.setEnabled(false);
         btnModificaciones.setEnabled(false);
         txtNombre.setEnabled(false);
         chkbActivo.setEnabled(false);
     }
     
-    public void activarControles(){
+    private void activarControles(){
         btnBaja.setEnabled(true);
         btnModificaciones.setEnabled(true);
         txtNombre.setEnabled(true);
